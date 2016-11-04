@@ -1,0 +1,25 @@
+{
+  "name": "test-tool-web",
+  "version": "0.0.1",
+  "description": "A virtual reality experience with tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.iconmobile.com/skasanzew/ToolTestVR-Web.git"
+  },
+  "keywords": [
+    "a-frame",
+    "vr",
+    "webvr",
+    "three.js",
+    "chrome"
+  ],
+  "author": "Sebastian Kasanzew",
+  "license": "ISC",
+  "dependencies": {
+    "aframe": "^0.3.2"
+  }
+}
