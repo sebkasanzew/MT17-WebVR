@@ -1,0 +1,24 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": false,
+      "modules": true
+    }
+  },
+  "plugins": [
+    "mocha"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
+  "rules": {
+    // Additional, per-project rules...
+  },
+  "env": {
+    "node": true,
+    "mocha": true
+  }
+}
