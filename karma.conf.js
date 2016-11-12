@@ -9,39 +9,13 @@
  */
 module.exports = function(config) {
   config.set({
-    frameworks: ['mocha', 'sinon-chai', 'browserify'],
+    frameworks: ['mocha', 'sinon-chai'],
     browsers: ['Chrome'],
     files: [
       'src/**/*.js',
       'test/*.js',
     ],
     exclude: [],
-    preprocessors: {
-      'src/**/*.js': ['browserify'],
-      'test/**/*.spec.js': ['browserify'],
-    },
-
-    // Browserify configuration
-    // The coverage command goes here instead of the preprocessor
-    // because we need it to work with browserify
-    browserify: {
-      debug: true,
-      transform: [
-        [
-          'babelify',
-          {
-            presets: 'es2015',
-          },
-        ], [
-          'browserify-istanbul',
-          {
-            instrumenterConfig: {
-              embedSource: true,
-            },
-          },
-        ],
-      ],
-    },
 
     // optionally, configure the reporter
     // text displays it within the console (alternative: text-summary)
