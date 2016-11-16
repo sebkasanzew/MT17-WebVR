@@ -5,7 +5,7 @@ import expect from 'chai.expect';
 */
 
 const expect = require('chai').expect;
-import greet from '../src/js/hello';
+import greet from '../src/js/sandbox/hello';
 
 describe('hello', function() {
   it('should say Hello to the World', function() {

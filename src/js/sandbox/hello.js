@@ -4,7 +4,7 @@
  * @return {string} output text
  */
 export function greet(text) {
-  'use strict';
+  "use strict";
 
   return `Hello, ${text}`;
 }

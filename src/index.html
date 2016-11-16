@@ -4,18 +4,53 @@
     <meta charset="utf-8">
     <title>Hello, World! • A-Frame</title>
     <meta name="description" content="Hello, World! • A-Frame">
-    <script src="node_modules/aframe/dist/aframe.min.js"></script>
+    <script src="js/bundle.js"></script>
 </head>
 <body>
-<a-scene>
-    <a-sphere position="0 1.25 -1" radius="1.25" color="#EF2D5E"></a-sphere>
-    <a-box position="-1 0.5 1" rotation="0 45 0" width="1" height="1" depth="1" color="#4CC3D9"></a-box>
-    <a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-    <a-plane rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+<!-- debug -->
+<a-scene stats
+         keyboard-shortcuts="enterVR: true; resetSensor: true"
+         fog="type: linear; color: #000;">
 
-    <a-sky color="#ECECEC"></a-sky>
-    <a-entity position="0 0 3.8">
+    <!-- Asset management system. -->
+    <a-assets timeout="1000">
+        <img id="sky" src="assets/img/360/tokio.jpg">
+
+        <!-- Mixins -->
+        <a-mixin id="tool-color-prime" material="color: green"></a-mixin>
+        <a-mixin id="tool-color-second" material="color: dark-grey"></a-mixin>
+    </a-assets>
+
+    <!-- Scene -->
+    <a-entity id="user">
         <a-camera></a-camera>
+        <a-entity hand-controls="left"></a-entity>
+        <a-entity hand-controls="right"></a-entity>
+    </a-entity>
+
+    <!--<a-sky src="#sky" color="#ECECEC" material="fog: false"></a-sky>-->
+
+    <a-entity light="type: ambient; color: #BBB"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+
+    <a-entity position="0 0 -3">
+        <!--<a-sphere position="0 1.25 -1" radius="1.25" mixin="tool-color-prime"></a-sphere>-->
+        <a-box id="firstBox"
+               cursor-listener
+               position="-1 0.5 1" rotation="0 45 0"
+               width="1"
+               height="1" depth="1" color="#4CC3D9">
+            <a-animation attribute="rotation"
+                         dur="10000"
+                         fill="forwards"
+                         easing="linear"
+                         from="0 0 0"
+                         to="0 360 0"
+                         repeat="indefinite"></a-animation>
+        </a-box>
+
+        <!--<a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>-->
+        <a-plane rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
     </a-entity>
 </a-scene>
 </body>

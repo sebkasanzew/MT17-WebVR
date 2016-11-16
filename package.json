@@ -2,7 +2,7 @@
   "name": "test-tool-web",
   "version": "0.0.1",
   "description": "A virtual reality experience with tools",
-  "main": "index.js",
+  "main": "gulpfile.babel.js",
   "scripts": {
     "test": "gulp test"
   },
@@ -20,35 +20,39 @@
   "author": "Sebastian Kasanzew",
   "license": "ISC",
   "dependencies": {
-    "aframe": "^0.3.2"
+    "aframe": "^0.3.2",
+    "aframe-gltf": "^1.1.0",
+    "aframe-physics-system": "^1.0.3",
+    "aframe-teleport-controls": "^0.1.0",
+    "aframe-text-component": "^0.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
-    "babel-polyfill": "^6.16.0",
+    "babel-eslint": "^7.1.0",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-istanbul": "^2.0.3",
     "babel-preset-es2015": "^6.18.0",
-    "babelify": "^7.3.0",
     "chai": "^3.5.0",
     "eslint": "^3.9.1",
-    "eslint-config-google": "^0.7.0",
+    "eslint-config-babel": "^2.0.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-flowtype": "^2.25.0",
     "eslint-plugin-mocha": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
     "gulp-karma-runner": "^1.2.0",
     "gulp-sourcemaps": "^2.2.0",
-    "istanbul": "^0.4.5",
+    "gulp-util": "^3.0.7",
+    "html-webpack-plugin": "^2.24.1",
     "karma": "^1.3.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-coverage": "^1.1.1",
     "karma-mocha": "^1.2.0",
     "karma-mocha-reporter": "^2.2.0",
-    "karma-sinon-chai": "^1.2.4",
-    "lolex": "^1.5.1",
+    "lolex": "^1.5.2",
     "mocha": "^3.1.2",
-    "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0",
-    "watchify": "^3.7.0",
     "webpack": "^1.13.3",
-    "webpack-stream": "^3.2.0"
+    "webpack-dev-server": "^1.16.2"
   }
 }

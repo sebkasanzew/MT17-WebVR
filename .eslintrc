@@ -9,7 +9,7 @@
   },
   "extends": [
     "eslint:recommended",
-    "google"
+    "babel"
   ],
   "rules": {
     // Additional, per-project rules...
