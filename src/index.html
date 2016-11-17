@@ -4,8 +4,13 @@
     <meta charset="utf-8">
     <title>Hello, World! • A-Frame</title>
     <meta name="description" content="Hello, World! • A-Frame">
-    <script src="js/bundle.js"></script>
+
+    <script src="js/libs.js"></script>
+    <script src="js/main.js"></script>
+
+    <!--<script src="js/aframe-gltf.min.js"></script>-->
 </head>
+
 <body>
 <!-- debug -->
 <a-scene stats
@@ -35,7 +40,7 @@
 
     <a-entity position="0 0 -3">
         <!--<a-sphere position="0 1.25 -1" radius="1.25" mixin="tool-color-prime"></a-sphere>-->
-        <a-box id="firstBox"
+        <a-box cuttable id="firstBox"
                cursor-listener
                position="-1 0.5 1" rotation="0 45 0"
                width="1"
@@ -53,5 +58,6 @@
         <a-plane rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
     </a-entity>
 </a-scene>
+
 </body>
 </html>

@@ -1,99 +1,126 @@
-'use strict';
+"use strict";
 
-import gulp from 'gulp';
-import gutil from 'gulp-util';
-// import babel from 'gulp-babel';
-import karma from 'gulp-karma-runner';
-import webpack from 'webpack-stream';
-import WebpackDevServer from 'webpack-dev-server';
-import webpackConfig from './webpack.config';
-// import sourcemaps from 'gulp-sourcemaps';
+import gulp from "gulp";
+// import concat from "gulp-concat";
+// import rename from "gulp-rename";
+import uglify from "gulp-uglify";
+import gutil from "gulp-util";
+import gulpif from "gulp-if";
+// import addsrc from "gulp-add-src";
+// import chalk from "chalk";
+import mocha from "gulp-mocha";
+// import del from "del";
+import sourcemaps from "gulp-sourcemaps";
+
+import source from "vinyl-source-stream";
+import buffer from "vinyl-buffer";
+
+import globby from "globby";
+import browserify from "browserify";
+import "babelify";
+
+import browserSync from "browser-sync";
+browserSync.create();
+const reload = browserSync.reload;
 
 /* global __dirname:true */
 
-gulp.task('default', ['build-dev']);
+const dist = "./dist";
+const production = false;
 
-// Build and watch cycle (another option for development)
-// Advantage: No server required, can run app from filesystem
-// Disadvantage: Requests are not blocked until bundle is available,
-//               can serve an old app on refresh
-gulp.task('build-dev', ['build-stupid'], () => {
-  gulp.watch(['app/**/*'], ['build-stupid']);
-});
+const libs = [
+  "aframe",
+  // "aframe-gltf",
+  "aframe-physics-system",
+  "aframe-teleport-controls",
+  "aframe-text-component",
+];
 
-// Production build
-gulp.task('build', ['webpack:build']);
+gulp.task("default", ["build"]);
 
-gulp.task('test', ['build'], () => {
-  gulp.src([
-    'src/**/*.js',
-    'test/**/*.js',
-  ], {'read': false})
-      .pipe(
-          karma.server({
-            'configFile': __dirname + '/karma.conf.js',
-            'singleRun': true,
-            'frameworks': ['mocha'],
-            'browsers': ['ChromeVR'],
-          })
-      );
-});
+gulp.task("build", ["html", "assets", "js", "libs"]);
 
-gulp.task('webpack:build', ['build-static', 'build-assets'], () => {
-  gulp.src([
-    'src/js/**/*.js',
-  ]).pipe(webpack(webpackConfig, null, (err, stats) => {
-    /* Use stats to do more things if needed */
-  })).pipe(gulp.dest('dist/js/'));
-});
-
-gulp.task('build-static', () => {
-  gulp.src([
-    'src/index.html',
-  ]).pipe(gulp.dest('dist/'));
-});
-
-gulp.task('build-assets', () => {
-  gulp.src([
-    'src/assets/**/*.*',
-  ]).pipe(gulp.dest('dist/assets/'));
-});
-
-// modify some webpack config options
-const myDevConfig = Object.create(webpackConfig);
-myDevConfig.devtool = 'sourcemap';
-myDevConfig.debug = true;
-
-// create a single instance of the compiler to allow caching
-const devCompiler = webpack(myDevConfig);
-
-gulp.task('webpack:build-dev', (callback) => {
-  // run webpack
-  devCompiler.run((err, stats) => {
-    if (err) throw new gutil.PluginError('webpack:build-dev', err);
-    gutil.log('[webpack:build-dev]', stats.toString({
-      colors: true,
-    }));
-    callback();
+gulp.task("watch", ["build"], () => {
+  browserSync.init({
+    server: dist,
+    // proxy: "local.tool"
   });
+
+  gulp.watch("src/js/**/*.js", ["js"]);
+  gulp.watch("src/*.html", ["html"]);
+
+  gulp.watch("dist/js/**/*.js").on("change", reload);
+  gulp.watch("dist/*.html").on("change", reload);
 });
 
-gulp.task('webpack-dev-server', () => {
-  const myConfig = Object.create(webpackConfig);
-  myConfig.devtool = 'eval';
-  myConfig.debug = true;
+gulp.task("js", () => {
+  const options = {
+    entries: globby.sync(["./src/js/index.js", "./src/**/*.js"]),
+    debug: !production,
+    paths: ["./node_modules", "./src/"]
+  };
 
-  new WebpackDevServer(webpack(myConfig), {
-    publicPath: '/' + myConfig.output.publicPath,
-    stats: {
-      colors: true,
-    },
-  }).listen(8080, 'localhost', (err) => {
-    if (err) throw new gutil.PluginError('webpack-dev-server', err);
-    // Server listening
-    gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
+  const b = browserify(options);
 
-    // keep the server alive or continue?
-    // callback();
+  libs.forEach((lib) => {
+    b.external(lib);
   });
+
+  b.transform("babelify", {presets: ["es2015"]})
+      .on("error", gutil.log)
+      .bundle()
+      .pipe(source("main.js"))
+      .pipe(gulpif(!production, buffer()))
+      .pipe(gulpif(!production, sourcemaps.init({loadMaps: true})))
+      .pipe(gulpif(!production, uglify()))
+      .pipe(gulpif(!production, sourcemaps.write("./")))
+      .pipe(gulp.dest(`${dist}/js`))
+      .pipe(gutil.noop());
+});
+
+gulp.task("libs", () => {
+  const options = {
+    debug: !production,
+  };
+
+  const b = browserify(options);
+
+  libs.forEach((lib) => {
+    b.require(lib);
+  });
+
+  b.on("error", gutil.log)
+      .bundle()
+      .pipe(source("libs.js"))
+      .pipe(buffer())
+      .pipe(gulpif(!production, sourcemaps.init({loadMaps: true})))
+      .pipe(uglify())
+      .pipe(gulpif(!production, sourcemaps.write("./")))
+      .pipe(gulp.dest(`${dist}/js`));
+});
+
+gulp.task("html", () => {
+  gulp.src(["src/**/*.html"])
+      .pipe(gulp.dest(dist));
+});
+
+gulp.task("assets", () => {
+  gulp.src([
+    "src/assets/**/*.*",
+  ])
+      .pipe(gulp.dest(`${dist}/assets/`));
+});
+
+gulp.task("test", ["js"], () => {
+  gutil.log("running tests...");
+
+  gulp.src([
+    dist + "/js/**/*.js",
+    dist + "/tests/**/*.js",
+  ], {"read": false})
+      .pipe(mocha());
+});
+
+gulp.task("watch-test", () => {
+  gulp.watch(["src/**", "test/**"], ["test"]);
 });

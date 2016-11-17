@@ -7,8 +7,6 @@ import AFRAME from "aframe";
 AFRAME.registerComponent("cuttable", {
   multiple: true,
   init: function() {
-    console.log(this.system);
+    console.log(`cuttable registered`);
   },
 });
-
-export default AFRAME;
