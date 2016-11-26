@@ -48,6 +48,7 @@ gulp.task("watch", ["build"], () => {
 
   gulp.watch("src/js/**/*.js", ["js"]);
   gulp.watch("src/*.html", ["html"]);
+  gulp.watch("src/assets/**/*.*", ["assets"]);
 
   gulp.watch("dist/js/**/*.js").on("change", reload);
   gulp.watch("dist/*.html").on("change", reload);

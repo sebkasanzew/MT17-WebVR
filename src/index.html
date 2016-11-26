@@ -9,6 +9,7 @@
     <script src="js/main.js"></script>
 
     <!--<script src="js/aframe-gltf.min.js"></script>-->
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
 </head>
 
 <body>
@@ -21,6 +22,9 @@
     <a-assets timeout="1000">
         <img id="sky" src="assets/img/360/tokio.jpg">
 
+        <!-- 3D Models -->
+        <a-asset-item id="vacuumCleaner" src="assets/3d/vacuumCleaner/model.dae"></a-asset-item>
+
         <!-- Mixins -->
         <a-mixin id="tool-color-prime" material="color: green"></a-mixin>
         <a-mixin id="tool-color-second" material="color: dark-grey"></a-mixin>
@@ -29,14 +33,16 @@
     <!-- Scene -->
     <a-entity id="user">
         <a-camera></a-camera>
-        <a-entity hand-controls="left"></a-entity>
-        <a-entity hand-controls="right"></a-entity>
+        <a-entity teleport-controls hand-controls="left"></a-entity>
+        <a-entity teleport-controls hand-controls="right"></a-entity>
     </a-entity>
 
     <!--<a-sky src="#sky" color="#ECECEC" material="fog: false"></a-sky>-->
 
     <a-entity light="type: ambient; color: #BBB"></a-entity>
     <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+
+    <a-entity collada-model="vacuumCleaner" position="0 2 -4"></a-entity>
 
     <a-entity position="0 0 -3">
         <!--<a-sphere position="0 1.25 -1" radius="1.25" mixin="tool-color-prime"></a-sphere>-->
