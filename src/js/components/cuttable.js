@@ -1,4 +1,5 @@
 import AFRAME from "aframe";
+import extras from "aframe-extras";
 import $ from "jquery";
 
 /* global console:true */
@@ -8,6 +9,9 @@ import $ from "jquery";
 if (typeof AFRAME === "undefined") {
   throw new Error("Component attempted to register before AFRAME was available.");
 }
+
+// TODO register only used components
+extras.registerAll();
 
 AFRAME.registerComponent("cuttable", {
   multiple: true,

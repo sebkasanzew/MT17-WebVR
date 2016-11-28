@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "aframe": "^0.3.2",
+    "aframe-extras": "^2.7.5",
     "aframe-physics-system": "^1.0.3",
     "aframe-teleport-controls": "^0.1.0",
     "aframe-text-component": "^0.3.0",

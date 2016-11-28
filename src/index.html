@@ -6,6 +6,8 @@
     <meta name="description" content="Hello, World! • A-Frame">
 
     <script src="js/libs.js"></script>
+    <!--<script type="application/javascript" src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.min.js"></script>-->
+
     <script src="js/main.js"></script>
 
     <!--<script src="js/aframe-gltf.min.js"></script>-->
@@ -16,39 +18,47 @@
 <!-- debug -->
 <a-scene stats
          keyboard-shortcuts="enterVR: true; resetSensor: true"
-         fog="type: linear; color: #000;">
+         fog="type: linear; color: #CCC; near: 5; far: 20">
 
     <!-- Asset management system. -->
     <a-assets timeout="1000">
         <img id="sky" src="assets/img/360/tokio.jpg">
 
         <!-- 3D Models -->
-        <a-asset-item id="vacuumCleaner" src="assets/3d/vacuumCleaner/model.dae"></a-asset-item>
+        <a-asset-item id="mainTable" src="assets/3d/mainTable/IKEA Tisch.dae"></a-asset-item>
+
+        <!-- Textures -->
+        <img id="wood-planks" src="assets/img/tex/re_planks.png">
+        <!--<img id="wood-toon" src="assets/img/tex/wood_texture_by_dellot.jpg">-->
 
         <!-- Mixins -->
         <a-mixin id="tool-color-prime" material="color: green"></a-mixin>
         <a-mixin id="tool-color-second" material="color: dark-grey"></a-mixin>
     </a-assets>
 
-    <!-- Scene -->
+    <!-- SCENE -->
     <a-entity id="user">
         <a-camera></a-camera>
         <a-entity teleport-controls hand-controls="left"></a-entity>
         <a-entity teleport-controls hand-controls="right"></a-entity>
     </a-entity>
 
-    <!--<a-sky src="#sky" color="#ECECEC" material="fog: false"></a-sky>-->
+    <a-sky src="#sky" color="#ECECEC" material="fog: true"></a-sky>
 
+    <!-- LIGHTS -->
     <a-entity light="type: ambient; color: #BBB"></a-entity>
-    <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.6; castShadow: true;" position="-0.5 1 1"></a-entity>
 
-    <a-entity collada-model="vacuumCleaner" position="0 2 -4"></a-entity>
+    <a-entity collada-model="#mainTable"
+              position="0 0 -1"
+              shadow="cast:true;">
+    </a-entity>
 
     <a-entity position="0 0 -3">
         <!--<a-sphere position="0 1.25 -1" radius="1.25" mixin="tool-color-prime"></a-sphere>-->
         <a-box cuttable id="firstBox"
                cursor-listener
-               position="-1 0.5 1" rotation="0 45 0"
+               position="-1 0.5 0.8" rotation="0 45 0"
                width="1"
                height="1" depth="1" color="#4CC3D9">
             <a-animation attribute="rotation"
@@ -61,7 +71,12 @@
         </a-box>
 
         <!--<a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>-->
-        <a-plane rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+        <a-plane rotation="-90 0 0"
+                 width="100"
+                 height="100"
+                 shadow="receive:true;"
+                 color="#EEE"
+                 material="src: #wood-planks; repeat: 100 100"></a-plane>
     </a-entity>
 </a-scene>
 
