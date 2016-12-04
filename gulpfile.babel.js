@@ -34,11 +34,13 @@ const libs = [
   "aframe-physics-system",
   "aframe-teleport-controls",
   "aframe-text-component",
+  // "csg",
+  "three-js-csg",
 ];
 
 gulp.task("default", ["build"]);
 
-gulp.task("build", ["html", "assets", "js", "libs"]);
+gulp.task("build", ["html", "assets", "js", "libs", "static-libs"]);
 
 gulp.task("watch", ["build"], () => {
   browserSync.init({
@@ -46,6 +48,7 @@ gulp.task("watch", ["build"], () => {
     // proxy: "local.tool"
   });
 
+  gulp.watch("src/lib/**/*.js", ["static-libs"]);
   gulp.watch("src/js/**/*.js", ["js"]);
   gulp.watch("src/*.html", ["html"]);
   gulp.watch("src/assets/**/*.*", ["assets"]);
@@ -56,7 +59,7 @@ gulp.task("watch", ["build"], () => {
 
 gulp.task("js", () => {
   const options = {
-    entries: globby.sync(["./src/js/index.js", "./src/**/*.js"]),
+    entries: globby.sync(["./src/js/index.js", "./src/js/**/*.js"]),
     debug: !production,
     paths: ["./node_modules", "./src/"]
   };
@@ -98,6 +101,11 @@ gulp.task("libs", () => {
       .pipe(uglify())
       .pipe(gulpif(!production, sourcemaps.write("./")))
       .pipe(gulp.dest(`${dist}/js`));
+});
+
+gulp.task("static-libs", () => {
+  gulp.src(["src/lib/**/*.js"])
+      .pipe(gulp.dest(`${dist}/js/`));
 });
 
 gulp.task("html", () => {
