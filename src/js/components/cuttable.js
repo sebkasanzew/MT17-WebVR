@@ -13,8 +13,17 @@ if (typeof AFRAME === "undefined") {
 
 AFRAME.registerComponent("cuttable", {
   schema: {},
-  init: function() {
-    const box = new THREE.Mesh(new THREE.Geometry().fromBufferGeometry(this.el.getObject3D('mesh').geometry));
+  init() {
+
+  },
+  update() {
+    const mesh = this.el.getObject3D('mesh');
+
+    if (!mesh) {
+      return;
+    }
+
+    const box = new THREE.Mesh(new THREE.Geometry().fromBufferGeometry(mesh.geometry));
     const sphere = new THREE.Mesh(new THREE.SphereGeometry(.7, 32, 32));
 
     const sBSP = new ThreeBSP(sphere);
@@ -23,20 +32,9 @@ AFRAME.registerComponent("cuttable", {
     const sub = bBSP.subtract(sBSP);
     const newMesh = sub.toMesh();
 
-    newMesh.material = new THREE.MeshPhongMaterial({
-      color: 0xdddddd,
-      specular: 0x1a1a1a,
-      shininess: 30,
-      // shading: THREE.FlatShading
-    });
-
-    this.el.removeAttribute('geometry');
-    this.el.setObject3D('firstBox', newMesh);
+    mesh.geometry = newMesh.geometry;
   },
-  update: function() {
+  remove() {
 
-  },
-  remove: function() {
-    this.el.removeObject3D('mesh');
   }
 });

@@ -21,11 +21,13 @@
 <!-- pool="mixin: board; size: 10" // TODO for aframe 0.4.0 -->
 <a-scene stats
          keyboard-shortcuts="enterVR: true; resetSensor: true"
+         physics="gravity: -9.8"
+         antialias="true"
 >
   <!-- fog="type: linear; color: #CCC; near: 5; far: 20" -->
 
   <!-- Asset management system. -->
-  <a-assets timeout="1000">
+  <a-assets timeout="10000">
     <!-- Sounds -->
     <audio id="saw-running" src="assets/sound/saw_running.ogg"></audio>
     <audio id="saw-begin" src="assets/sound/saw_begin.ogg"></audio>
@@ -35,38 +37,76 @@
     <a-asset-item id="mainTable" src="assets/3d/mainTable/IKEA Tisch.dae"></a-asset-item>
 
     <!-- Textures -->
-    <img id="sky" src="assets/img/360/tokio.jpg">
+    <!-- <img id="sky" src="assets/img/360/tokio.jpg"> -->
     <img id="wood-planks" src="assets/img/tex/re_planks.png">
-    <!--<img id="wood-toon" src="assets/img/tex/wood_texture_by_dellot.jpg">-->
+    <img id="wood-toon" src="assets/img/tex/wood_texture_by_dellot.jpg">
 
-    <!-- Mixins -->
+    <!-- Mixins: Materials -->
     <a-mixin id="tool-color-prime" material="color: green"></a-mixin>
     <a-mixin id="tool-color-second" material="color: dark-grey"></a-mixin>
+
+    <!-- Mixins: Objects -->
+    <a-mixin id="cube"
+             dynamic-body="mass: 10; linearDamping: 0.05; angularDamping: 0.05"
+             geometry="primitive: box; height: 0.30; width: 0.30; depth: 0.30"
+             material="color: #EF2D00;"></a-mixin>
   </a-assets>
 
   <!-- SCENE -->
   <a-entity id="user">
     <a-camera></a-camera>
-    <a-entity teleport-controls hand-controls="left"></a-entity>
-    <a-entity teleport-controls hand-controls="right"></a-entity>
+    <!--<a-entity camera look-controls wasd-controls></a-entity>-->
+    <a-entity id="leftController"
+              static-body="shape: sphere; sphereRadius: 0.02;"
+              vive-controls="hand: left"
+              sphere-collider="objects: .cube"
+              grab></a-entity>
+    <a-entity id="rightController"
+              static-body="shape: sphere; sphereRadius: 0.02;"
+              vive-controls="hand: right"
+              sphere-collider="objects: .cube"
+              grab></a-entity>
   </a-entity>
 
   <!-- LIGHTS -->
   <a-entity light="type: ambient; color: #BBB"></a-entity>
-  <a-entity light="type: directional; color: #FFF; intensity: 0.6; castShadow: true;" position="-0.5 1 1"></a-entity>
+  <a-entity light="type: directional; color: #FFF; intensity: 0.6;" position="-0.5 1 1"></a-entity>
 
+  <!-- TODO resolve warnings which is caused by asynchronous calls/loading -->
+  <!-- static-body="shape: hull;" -->
   <a-entity collada-model="#mainTable"
-            position="0 0 -1"
-            shadow="cast:true;"
-            sound="src: #saw-running; autoplay: false; loop: true">
+            position="2 0 -1">
+    <!--sound="src: #saw-running; autoplay: false; loop: true">-->
+  </a-entity>
+  <!-->
+
+  <a-entity position="0 0 -1">
+    <a-entity class="cube" mixin="cube" position="0.30 1.65 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="0 1.95 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="-0.30 1.65 0"></a-entity>
+
+    <a-entity class="cube" mixin="cube" position="0.60 1.35 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="0.60 1.05 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="0.60 0.75 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="0.60 0.45 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="0.60 0.15 0"></a-entity>
+
+    <a-entity class="cube" mixin="cube" position="0.30 0.75 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="0 0.75 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="-0.30 0.75 0"></a-entity>
+
+    <a-entity class="cube" mixin="cube" position="-0.60 1.35 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="-0.60 1.05 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="-0.60 0.75 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="-0.60 0.45 0"></a-entity>
+    <a-entity class="cube" mixin="cube" position="-0.60 0.15 0"></a-entity>
   </a-entity>
 
   <a-entity position="0 0 -3">
-    <!--<a-sphere position="0 1.25 -1" radius="1.25" mixin="tool-color-prime"></a-sphere>-->
     <a-entity id="firstBox"
               geometry="primitive: box"
+              material="src: #wood-toon"
               cuttable
-              cursor-listener
               position="-1 0.5 0.8" rotation="0 45 0"
               width="1"
               height="1" depth="1" color="#4CC3D9">
@@ -79,14 +119,16 @@
                    repeat="indefinite"></a-animation>
     </a-entity>
 
-    <!--<a-cylinder position="1 0.75 1" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>-->
-    <a-plane rotation="-90 0 0"
-             width="100"
-             height="100"
-             shadow="receive:true;"
-             color="#EEE"
-             material="src: #wood-planks; repeat: 100 100"></a-plane>
+    <a-plane
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        static-body
+        color="#EEE"
+        repeat="100 100"
+        src="#wood-planks"></a-plane>
   </a-entity>
+
 </a-scene>
 
 </body>

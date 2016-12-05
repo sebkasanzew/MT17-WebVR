@@ -1,4 +1,8 @@
 import extras from "aframe-extras";
 
-// TODO register only used components
-extras.registerAll();
+export default () => {
+  // TODO register only used components
+  console.log("extras:", extras);
+
+  extras.registerAll();
+}
