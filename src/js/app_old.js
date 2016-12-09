@@ -1,6 +1,6 @@
 // custom Components
-import "./components/cuttable";
-import "./components/extras";
+import "./aframe-components/cuttable";
+import "./aframe-components/extras";
 // import "./components/grab";
 import "./sandbox/vive-hands";
 
