@@ -11,4 +11,4 @@ export default () => {
     hands = document.querySelectorAll("a-entity[tracked-controls]");
     console.log("vive controller:", hands);
   });
-}
+};

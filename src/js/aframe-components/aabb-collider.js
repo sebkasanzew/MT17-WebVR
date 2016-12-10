@@ -11,10 +11,10 @@ const THREE = AFRAME.THREE;
  * @property {string} state - State to set on collided entities.
  *
  */
-AFRAME.registerComponent('aabb-collider', {
+AFRAME.registerComponent("aabb-collider", {
   schema: {
-    objects: {default: ''},
-    state: {default: 'collided'}
+    objects: {default: ""},
+    state: {default: "collided"}
   },
 
   init() {
@@ -47,7 +47,7 @@ AFRAME.registerComponent('aabb-collider', {
     return function () {
       const collisions = [];
       const el = this.el;
-      const mesh = el.getObject3D('mesh');
+      const mesh = el.getObject3D("mesh");
       const self = this;
       // No mesh, no collisions
       if (!mesh) {
@@ -62,7 +62,7 @@ AFRAME.registerComponent('aabb-collider', {
       collisions.forEach(handleHit);
       // No collisions.
       if (collisions.length === 0) {
-        self.el.emit('hit', {el: null});
+        self.el.emit("hit", {el: null});
       }
       // Updated the state of the elements that are not intersected anymore.
       this.collisions.filter(function (el) {
@@ -76,7 +76,7 @@ AFRAME.registerComponent('aabb-collider', {
       // AABB collision detection
       function intersect(el) {
         let intersected;
-        const mesh = el.getObject3D('mesh');
+        const mesh = el.getObject3D("mesh");
         let elMin;
         let elMax;
         if (!mesh) {
@@ -99,9 +99,9 @@ AFRAME.registerComponent('aabb-collider', {
       }
 
       function handleHit(hitEl) {
-        hitEl.emit('hit');
+        hitEl.emit("hit");
         hitEl.addState(self.data.state);
-        self.el.emit('hit', {el: hitEl});
+        self.el.emit("hit", {el: hitEl});
       }
 
       function updateBoundingBox() {

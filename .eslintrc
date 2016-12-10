@@ -7,11 +7,16 @@
       "modules": true
     }
   },
+  "plugins": [
+    "react"
+  ],
   "extends": [
     "eslint:recommended",
     "babel"
   ],
   "rules": {
     // Additional, per-project rules...
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
   }
 }

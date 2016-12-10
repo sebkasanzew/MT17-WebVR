@@ -5,4 +5,4 @@ export default () => {
   console.log("extras:", extras);
 
   extras.registerAll();
-}
+};

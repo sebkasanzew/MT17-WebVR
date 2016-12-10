@@ -1,24 +1,25 @@
-var path = require('path');
-var webpack = require('webpack');
-require('babel-polyfill');
+let path = require("path");
+let webpack = require("webpack");
+require("babel-polyfill");
 
-var IS_PRODUCTION = process.env.NODE_ENV === 'production';
+let IS_PRODUCTION = process.env.NODE_ENV === "production";
 
-var ENTRY_POINTS = [
-  './src/js/app'
+let ENTRY_POINTS = [
+  "./src/js/app"
 ];
 
-var JS_LOADERS = [
-  'babel?cacheDirectory&presets[]=react,presets[]=es2015,presets[]=stage-0'
+let JS_LOADERS = [
+  "babel?cacheDirectory&presets[]=react,presets[]=es2015,presets[]=stage-0"
 ];
 
-var PLUGINS = [];
+let PLUGINS = [];
+
 if (IS_PRODUCTION) {
   // Uglify in production.
   PLUGINS.push(
       new webpack.optimize.UglifyJsPlugin({
         mangle: {
-          except: ['$super', '$', 'exports', 'require']
+          except: ["$super", "$", "exports", "require"]
         },
         sourcemap: false
       })
@@ -29,14 +30,15 @@ module.exports = {
   entry: ENTRY_POINTS,
   output: {
     // Bundle will be served at /bundle.js locally.
-    filename: 'bundle.js',
+    filename: "bundle.js",
     // Bundle will be built at ./src/media/js.
-    path: './build',
-    publicPath: '/',
+    path: "./build",
+    publicPath: "/",
   },
   module: {
     noParse: [
-      /node_modules\/aframe\/dist\/aframe.js/,
+      __dirname + /node_modules\/aframe\/dist\/aframe.js/, // for aframe from NPM
+      __dirname + "./node_modules/cannon/build/cannon.js/", // for aframe-extras from NPM
     ],
     loaders: [
       {
@@ -47,24 +49,44 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: "style-loader!css-loader"
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
+        loader: "json-loader"
+      },
+      {
+        // Images
+        test: /\.png|jpg$/,
+        loader: "url-loader?limit100000",
+      },
+      {
+        // Sound
+        test: /\.ogg|mp3$/,
+        loader: "url-loader?limit10000",
+      },
+      {
+        // Models
+        test: /\.dae|gltf$/,
+        loader: "url-loader?limit10000",
       }
     ],
   },
   plugins: PLUGINS,
   resolve: {
-    extensions: ['', '.js', '.json'],
-    fallback: path.join(__dirname, 'node_modules'),
+    extensions: ["", ".js", ".json"],
+    fallback: path.join(__dirname, "node_modules"),
     modulesDirectories: [
-      'src/js',
-      'node_modules',
+      "src/js",
+      "node_modules",
     ]
   },
   resolveLoader: {
-    fallback: [path.join(__dirname, 'node_modules')]
+    fallback: [path.join(__dirname, "node_modules")]
+  },
+  devServer: {
+    stats: {
+      warnings: true
+    }
   }
 };

@@ -1,67 +1,105 @@
-import 'aframe';
-import 'aframe-animation-component';
-import 'aframe-text-component';
-import 'babel-polyfill';
-import {Entity, Scene} from 'aframe-react';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import "aframe";
+import "aframe-animation-component";
+import "aframe-text-component";
+import "babel-polyfill";
+import {Entity, Scene} from "aframe-react";
+import React from "react";
+import ReactDOM from "react-dom";
 
 import "./aframe-components/cuttable";
 import "./aframe-components/extras";
 
-import Camera from './components/Camera';
-import Text from './components/Text';
-import Sky from './components/Sky';
+import Assets from "./components/Assets";
+import Camera from "./components/Camera";
+import Lights from "./components/Lights";
+
+import "./sandbox/vive-hands";
 
 class VRScene extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {color: 'red'};
+    this.state = {color: "red"};
   }
 
   changeColor() {
-    const colors = ['red', 'orange', 'yellow', 'green', 'blue'];
+    const colors = ["red", "orange", "yellow", "green", "blue"];
     this.setState({
       color: colors[Math.floor(Math.random() * colors.length)]
     });
   }
 
+  /*
+   {/* debug
+   {/* pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
+   */
+
+
   render() {
     return (
-        <Scene>
-          <Camera>
-            <a-cursor
-                animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
-            >
-            </a-cursor>
-          </Camera>
+        <Scene
+            // stats
+            keyboard-shortcuts="enterVR: true; resetSensor: true"
+            physics="gravity: -9.8"
+            antialias="true">
 
-          <Sky src="url(https://rawgit.com/aframevr/assets/gh-pages/360-image-gallery-boilerplate/img/sechelt.jpg)"/>
+          <Assets/>
 
-          <Text
-              text='Hello World!'
-              color='#DADADA'
-              position='-1.75 1 -3'/>
+          <Camera/>
 
-          <Entity light={{type: 'ambient', color: '#888'}}/>
-          <Entity light={{type: 'directional', intensity: 0.5}} position='-1 1 0'/>
-          <Entity light={{type: 'directional', intensity: 1}} position='1 1 0'/>
+          <Lights/>
 
-          <Entity
-              animation__rot={{property: 'rotation', dur: 2000, loop: true, to: '360 360 360'}}
-              animation__sca={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '1.1 1.1 1.1'}}
-              geometry='primitive: box'
-              material={{color: this.state.color, opacity: 0.6}}
-              position='0 -0.5 -3'
-              onClick={this.changeColor.bind(this)}>
-            <Entity
-                animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '2 2 2'}}
-                geometry='primitive: box; depth: 0.2; height: 0.2; width: 0.2'
-                material={{color: '#24CAFF'}}/>
+          <Entity collada-model="#mainTable"
+                  position="2 0 -1"
+                  /*
+                   TODO resolve warnings which is caused by asynchronous calls/loading
+                   static-body="shape: hull;"
+                   */
+          />
+
+          <Entity position="0 0 -1">
+            <Entity class="cube" mixin="cube" position="0.30 1.65 0"/>
+            <Entity class="cube" mixin="cube" position="0 1.95 0"/>
+            <Entity class="cube" mixin="cube" position="-0.30 1.65 0"/>
+
+            <Entity class="cube" mixin="cube" position="0.60 1.35 0"/>
+            <Entity class="cube" mixin="cube" position="0.60 1.05 0"/>
+            <Entity class="cube" mixin="cube" position="0.60 0.75 0"/>
+            <Entity class="cube" mixin="cube" position="0.60 0.45 0"/>
+            <Entity class="cube" mixin="cube" position="0.60 0.15 0"/>
+
+            <Entity class="cube" mixin="cube" position="0.30 0.75 0"/>
+            <Entity class="cube" mixin="cube" position="0 0.75 0"/>
+            <Entity class="cube" mixin="cube" position="-0.30 0.75 0"/>
+
+            <Entity class="cube" mixin="cube" position="-0.60 1.35 0"/>
+            <Entity class="cube" mixin="cube" position="-0.60 1.05 0"/>
+            <Entity class="cube" mixin="cube" position="-0.60 0.75 0"/>
+            <Entity class="cube" mixin="cube" position="-0.60 0.45 0"/>
+            <Entity class="cube" mixin="cube" position="-0.60 0.15 0"/>
           </Entity>
+
+          <Entity position="0 0 -3">
+            <Entity id="firstBox"
+                    geometry="primitive: box"
+                    material="src: #wood-toon"
+                    cuttable=""
+                    position="-1 0.5 0.8" rotation="0 45 0"
+                    width="1"
+                    height="1" depth="1" color="#4CC3D9">
+            </Entity>
+
+            {/* sound="src: #saw-running; autoplay: false; loop: true"> */}
+
+            <Entity geometry="primitive: plane; width: 100; height: 100"
+                    rotation="-90 0 0"
+                    static-body=""
+                    material="src: #wood-planks; repeat: 100 100">
+            </Entity>
+          </Entity>
+
         </Scene>
     );
   }
 }
 
-ReactDOM.render(<VRScene/>, document.querySelector('.scene-container'));
+ReactDOM.render(<VRScene/>, document.querySelector(".scene-container"));

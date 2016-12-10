@@ -1,7 +1,7 @@
 import AFRAME from "aframe";
 
-const THREE = AFRAME.THREE;
-const ThreeBSP = require("three-js-csg")(THREE);
+// const THREE = AFRAME.THREE;
+// const ThreeBSP = require("three-js-csg")(THREE);
 
 /* global console:true */
 

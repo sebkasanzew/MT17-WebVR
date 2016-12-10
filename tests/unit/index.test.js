@@ -1,5 +1,5 @@
-import assert from 'assert';
-import Camera from '../../src/js/components/Camera';
+import assert from "assert";
+import Camera from "../../src/js/components/Camera";
 
 global.AFRAME = {
   components: {
@@ -12,8 +12,8 @@ global.AFRAME = {
   }
 };
 
-describe('Components', () => {
-  it('add Camera to DOM', () => {
+describe("Components", () => {
+  it("add Camera to DOM", () => {
     console.log(`${Camera}`);
   });
 });
