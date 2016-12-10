@@ -35,7 +35,7 @@
   "dependencies": {
     "aframe": "^0.3.2",
     "aframe-animation-component": "^3.0.4",
-    "aframe-extras": "^2.7.5",
+    "aframe-extras": "^3.1.0",
     "aframe-physics-system": "^1.0.3",
     "aframe-react": "^3.4.0",
     "aframe-teleport-controls": "^0.1.0",
@@ -60,7 +60,7 @@
     "babel-runtime": "^6.20.0",
     "chai": "^3.5.0",
     "css-loader": "^0.26.1",
-    "eslint": "^3.9.1",
+    "eslint": "^3.12.0",
     "eslint-config-babel": "^3.0.0",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-chai-expect": "^1.1.1",

@@ -8,6 +8,9 @@ import ReactDOM from "react-dom";
 
 import "./aframe-components/cuttable";
 import "./aframe-components/extras";
+import "./aframe-components/physics";
+import "./aframe-components/grab";
+import "./aframe-components/aabb-collider";
 
 import Assets from "./components/Assets";
 import Camera from "./components/Camera";
@@ -18,25 +21,14 @@ import "./sandbox/vive-hands";
 class VRScene extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {color: "red"};
+    this.state = {};
   }
-
-  changeColor() {
-    const colors = ["red", "orange", "yellow", "green", "blue"];
-    this.setState({
-      color: colors[Math.floor(Math.random() * colors.length)]
-    });
-  }
-
-  /*
-   {/* debug
-   {/* pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
-   */
-
 
   render() {
     return (
         <Scene
+            // debug
+            // pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
             // stats
             keyboard-shortcuts="enterVR: true; resetSensor: true"
             physics="gravity: -9.8"
@@ -50,10 +42,10 @@ class VRScene extends React.Component {
 
           <Entity collada-model="#mainTable"
                   position="2 0 -1"
-                  /*
-                   TODO resolve warnings which is caused by asynchronous calls/loading
-                   static-body="shape: hull;"
-                   */
+              /*
+               TODO resolve warnings which is caused by asynchronous calls/loading
+               static-body="shape: hull;"
+               */
           />
 
           <Entity position="0 0 -1">
