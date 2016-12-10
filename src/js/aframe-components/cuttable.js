@@ -17,7 +17,7 @@ AFRAME.registerComponent("cuttable", {
 
   },
   update() {
-    const mesh = this.el.getObject3D('mesh');
+    const mesh = this.el.getObject3D("mesh");
 
     if (!mesh) {
       return;

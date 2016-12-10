@@ -5,9 +5,9 @@ import AFRAME from "aframe";
  * Determines if the entity is grabbed or released.
  * Updates its position to move along the controller.
  */
-AFRAME.registerComponent('grab', {
+AFRAME.registerComponent("grab", {
   init() {
-    this.GRABBED_STATE = 'grabbed';
+    this.GRABBED_STATE = "grabbed";
     // Bind event handlers
     this.onHit = this.onHit.bind(this);
     this.onGripOpen = this.onGripOpen.bind(this);
@@ -16,32 +16,32 @@ AFRAME.registerComponent('grab', {
 
   play() {
     const el = this.el;
-    el.addEventListener('hit', this.onHit);
-    el.addEventListener('gripclose', this.onGripClose);
-    el.addEventListener('gripopen', this.onGripOpen);
-    el.addEventListener('thumbup', this.onGripClose);
-    el.addEventListener('thumbdown', this.onGripOpen);
-    el.addEventListener('pointup', this.onGripClose);
-    el.addEventListener('pointdown', this.onGripOpen);
+    el.addEventListener("hit", this.onHit);
+    el.addEventListener("gripclose", this.onGripClose);
+    el.addEventListener("gripopen", this.onGripOpen);
+    el.addEventListener("thumbup", this.onGripClose);
+    el.addEventListener("thumbdown", this.onGripOpen);
+    el.addEventListener("pointup", this.onGripClose);
+    el.addEventListener("pointdown", this.onGripOpen);
   },
 
   pause: function () {
     const el = this.el;
-    el.removeEventListener('hit', this.onHit);
-    el.removeEventListener('gripclose', this.onGripClose);
-    el.removeEventListener('gripopen', this.onGripOpen);
-    el.removeEventListener('thumbup', this.onGripClose);
-    el.removeEventListener('thumbdown', this.onGripOpen);
-    el.removeEventListener('pointup', this.onGripClose);
-    el.removeEventListener('pointdown', this.onGripOpen);
+    el.removeEventListener("hit", this.onHit);
+    el.removeEventListener("gripclose", this.onGripClose);
+    el.removeEventListener("gripopen", this.onGripOpen);
+    el.removeEventListener("thumbup", this.onGripClose);
+    el.removeEventListener("thumbdown", this.onGripOpen);
+    el.removeEventListener("pointup", this.onGripClose);
+    el.removeEventListener("pointdown", this.onGripOpen);
   },
 
-  onGripClose(event) {
+  onGripClose() {
     this.grabbing = true;
     delete this.previousPosition;
   },
 
-  onGripOpen(event) {
+  onGripOpen() {
     const hitEl = this.hitEl;
     this.grabbing = false;
     if (!hitEl) {
@@ -70,8 +70,8 @@ AFRAME.registerComponent('grab', {
       return;
     }
     this.updateDelta();
-    position = hitEl.getComputedAttribute('position');
-    hitEl.setAttribute('position', {
+    position = hitEl.getComputedAttribute("position");
+    hitEl.setAttribute("position", {
       x: position.x + this.deltaPosition.x,
       y: position.y + this.deltaPosition.y,
       z: position.z + this.deltaPosition.z
@@ -79,7 +79,7 @@ AFRAME.registerComponent('grab', {
   },
 
   updateDelta: function () {
-    const currentPosition = this.el.getComputedAttribute('position');
+    const currentPosition = this.el.getComputedAttribute("position");
     const previousPosition = this.previousPosition || currentPosition;
     const deltaPosition = {
       x: currentPosition.x - previousPosition.x,
