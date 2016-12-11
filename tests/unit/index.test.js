@@ -1,4 +1,4 @@
-import assert from "assert";
+import {assert} from "chai";
 import Camera from "../../src/js/components/Camera";
 
 global.AFRAME = {
@@ -15,5 +15,6 @@ global.AFRAME = {
 describe("Components", () => {
   it("add Camera to DOM", () => {
     console.log(`${Camera}`);
+    assert.typeOf(Camera, "function");
   });
 });

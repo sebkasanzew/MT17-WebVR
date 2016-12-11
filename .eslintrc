@@ -8,8 +8,14 @@
     }
   },
   "plugins": [
-    "react"
+    "react",
+    "mocha"
   ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
   "extends": [
     "eslint:recommended",
     "babel"
@@ -17,6 +23,8 @@
   "rules": {
     // Additional, per-project rules...
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "mocha/no-exclusive-tests": "error",
+    "linebreak-style": "off"
   }
 }
