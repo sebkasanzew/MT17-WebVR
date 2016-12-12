@@ -1,23 +1,23 @@
 import {Entity} from "aframe-react";
 import React from "react";
+// import Controls from "Controls";
 
 export default (props) => (
     <Entity>
       <Entity camera="userHeight: 1.7" look-controls="" wasd-controls="" {...props}/>
-
-      {/* TODO figure out why the "Render count or primcount is 0" warnings appear */}
+      {/*
       <Entity id="leftController"
-              static-body="shape: sphere; sphereRadius: 0.02;"
               vive-controls="hand: left"
+              static-body="shape: sphere; sphereRadius: 0.02;"
               sphere-collider="objects: .cube"
               grab
       />
       <Entity id="rightController"
-              static-body="shape: sphere; sphereRadius: 0.02;"
               vive-controls="hand: right"
+              static-body="shape: sphere; sphereRadius: 0.02;"
               sphere-collider="objects: .cube"
               grab
       />
-
+      */}
     </Entity>
 );

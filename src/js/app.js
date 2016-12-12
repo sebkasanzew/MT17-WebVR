@@ -1,6 +1,9 @@
 import "aframe";
-import "aframe-animation-component";
-import "aframe-text-component";
+//import "../temp/aframe-master";
+//import "aframe-animation-component";
+//import "aframe-text-component";
+// import "./aframe-components/aframe-teleport-controls";
+import "aframe-teleport-controls";
 import "babel-polyfill";
 import {Entity, Scene} from "aframe-react";
 import React from "react";
@@ -14,9 +17,12 @@ import "./aframe-components/aabb-collider";
 
 import Assets from "./components/Assets";
 import Camera from "./components/Camera";
+import Controls from "./components/Controls";
 import Lights from "./components/Lights";
 
-import "./sandbox/vive-hands";
+import Hands from "./sandbox/vive-hands";
+
+new Hands();
 
 class VRScene extends React.Component {
   constructor(props) {
@@ -31,43 +37,60 @@ class VRScene extends React.Component {
             // pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
             // stats
             keyboard-shortcuts="enterVR: true; resetSensor: true"
-            physics="gravity: -9.8"
+            physics="gravity: -9.8; debug: true; friction: 0.1"
             antialias="true">
 
           <Assets/>
 
+
           <Camera/>
+          {/*
+          <Controls
+              teleport-controls
+              static-body="shape: sphere; sphereRadius: 0.02;"
+              sphere-collider="objects: .cube"
+              grab
+          />
+          */}
+          <Entity id="user"
+                  position="0 0 0">
+            <Controls
+                teleport-controls
+                static-body="shape: sphere; sphereRadius: 0.02;"
+                sphere-collider="objects: .cube"
+                grab
+            />
+            {/*
+            <Entity id="leftController"
+                    vive-controls="hand: left"
+                    teleport-controls
+                    static-body="shape: sphere; sphereRadius: 0.02;"
+                    sphere-collider="objects: .cube"
+                    grab
+            />
+            <Entity id="rightController"
+                    vive-controls="hand: right"
+                    teleport-controls
+                    static-body="shape: sphere; sphereRadius: 0.02;"
+                    sphere-collider="objects: .cube"
+                    grab
+            />
+             */}
+          </Entity>
 
           <Lights/>
 
           <Entity collada-model="#mainTable"
-                  position="2 0 -1"
-              /*
-               TODO resolve warnings which is caused by asynchronous calls/loading
-               static-body="shape: hull;"
-               */
+                  position="0 0 -1"
+
+              // TODO resolve errors and warnings which is caused by wrong normals
+                  static-body="shape: hull;"
           />
 
           <Entity position="0 0 -1">
-            <Entity class="cube" mixin="cube" position="0.30 1.65 0"/>
-            <Entity class="cube" mixin="cube" position="0 1.95 0"/>
-            <Entity class="cube" mixin="cube" position="-0.30 1.65 0"/>
-
-            <Entity class="cube" mixin="cube" position="0.60 1.35 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 1.05 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 0.45 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 0.15 0"/>
-
-            <Entity class="cube" mixin="cube" position="0.30 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="0 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="-0.30 0.75 0"/>
-
-            <Entity class="cube" mixin="cube" position="-0.60 1.35 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 1.05 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 0.45 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 0.15 0"/>
+            <Entity class="cube" mixin="cube" position="0.35 1.1 0"/>
+            <Entity class="cube" mixin="cube" position="0 1.1 0"/>
+            <Entity class="cube" mixin="cube" position="-0.35 1.1 0"/>
           </Entity>
 
           <Entity position="0 0 -3">
@@ -84,11 +107,16 @@ class VRScene extends React.Component {
 
             <Entity geometry="primitive: plane; width: 100; height: 100"
                     rotation="-90 0 0"
-                    static-body=""
                     material="src: #wood-planks; repeat: 100 100">
             </Entity>
+            <Entity // Workaround for the collider of the ground being to high
+                geometry="primitive: plane; width: 100; height: 100"
+                rotation="-90 0 0"
+                position="0 -0.1 0"
+                static-body=""
+                material="transparent: true"
+            />
           </Entity>
-
         </Scene>
     );
   }

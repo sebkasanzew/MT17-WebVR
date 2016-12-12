@@ -4,13 +4,9 @@ require("babel-polyfill");
 
 let IS_PRODUCTION = process.env.NODE_ENV === "production";
 
-let ENTRY_POINTS = [
-  "./src/js/app"
-];
+const BUILD_DIR = path.resolve(__dirname, "build");
 
-let JS_LOADERS = [
-  "babel?cacheDirectory&presets[]=react,presets[]=es2015,presets[]=stage-0"
-];
+const APP_DIR = path.resolve(__dirname, "src/js");
 
 let PLUGINS = [];
 
@@ -27,24 +23,25 @@ if (IS_PRODUCTION) {
 }
 
 module.exports = {
-  entry: ENTRY_POINTS,
+  entry: `${APP_DIR}/app.js`,
   output: {
     // Bundle will be served at /bundle.js locally.
     filename: "bundle.js",
     // Bundle will be built at ./src/media/js.
-    path: "./build",
+    path: BUILD_DIR,
     publicPath: "/",
   },
   module: {
     noParse: [
-      __dirname + /node_modules\/aframe\/dist\/aframe.js/, // for aframe from NPM
+      __dirname + "./node_modules/aframe/dist/aframe.js/", // for aframe from NPM
       __dirname + "./node_modules/cannon/build/cannon.js/", // for aframe-extras from NPM
     ],
     loaders: [
       {
         // JS.
         exclude: /(node_modules|bower_components)/,
-        loaders: JS_LOADERS,
+        include: APP_DIR,
+        loader: "babel-loader",
         test: /\.js$/,
       },
       {
@@ -74,7 +71,7 @@ module.exports = {
   },
   plugins: PLUGINS,
   resolve: {
-    extensions: ["", ".js", ".json"],
+    extensions: ["", ".js", ".jsx", ".json"],
     fallback: path.join(__dirname, "node_modules"),
     modulesDirectories: [
       "src/js",
@@ -82,6 +79,7 @@ module.exports = {
     ]
   },
   resolveLoader: {
+    root: path.join(__dirname, "node_modules"),
     fallback: [path.join(__dirname, "node_modules")]
   },
   devServer: {
