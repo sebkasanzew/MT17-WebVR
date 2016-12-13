@@ -1,9 +1,8 @@
-import "aframe";
-//import "../temp/aframe-master";
-//import "aframe-animation-component";
-//import "aframe-text-component";
-// import "./aframe-components/aframe-teleport-controls";
-import "aframe-teleport-controls";
+// import "aframe";
+import "../temp/aframe-master";
+// import "aframe-animation-component";
+// import "aframe-text-component";
+// import "aframe-teleport-controls";
 import "babel-polyfill";
 import {Entity, Scene} from "aframe-react";
 import React from "react";
@@ -11,18 +10,15 @@ import ReactDOM from "react-dom";
 
 import "./aframe-components/cuttable";
 import "./aframe-components/extras";
-import "./aframe-components/physics";
-import "./aframe-components/grab";
-import "./aframe-components/aabb-collider";
+import "./aframe-components/follow";
+// import "./aframe-components/grab";
+// import "./aframe-components/aabb-collider";
 
 import Assets from "./components/Assets";
 import Camera from "./components/Camera";
 import Controls from "./components/Controls";
 import Lights from "./components/Lights";
-
-import Hands from "./sandbox/vive-hands";
-
-new Hands();
+import Saw from "./components/Saw";
 
 class VRScene extends React.Component {
   constructor(props) {
@@ -33,64 +29,66 @@ class VRScene extends React.Component {
   render() {
     return (
         <Scene
-            // debug
+            debug
             // pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
             // stats
             keyboard-shortcuts="enterVR: true; resetSensor: true"
-            physics="gravity: -9.8; debug: true; friction: 0.1"
+            physics="gravity: -9.8; debug: false;"
             antialias="true">
 
           <Assets/>
 
-
           <Camera/>
-          {/*
+
           <Controls
-              teleport-controls
+              // teleport-controls="true"
               static-body="shape: sphere; sphereRadius: 0.02;"
-              sphere-collider="objects: .cube"
+              sphere-collider="objects: .cube;"
               grab
+              /*
+              events={{
+                gripdown: () => {
+                  console.log("gripdown");
+                },
+                trackpaddown: () => {
+                  console.log("trackpaddown");
+                },
+                menudown: () => {
+                  console.log("menudown");
+                },
+                systemdown: () => {
+                  console.log("systemdown");
+                },
+                // buttondown: () => {console.log("buttondown");},
+                // touchstart: () => {console.log("touchstart");},
+                triggerdown: () => {
+                  console.log("triggerdown");
+                },
+                // triggerup: () => {console.log("triggerup");},
+              }}
+              */
           />
-          */}
-          <Entity id="user"
-                  position="0 0 0">
-            <Controls
-                teleport-controls
-                static-body="shape: sphere; sphereRadius: 0.02;"
-                sphere-collider="objects: .cube"
-                grab
-            />
-            {/*
-            <Entity id="leftController"
-                    vive-controls="hand: left"
-                    teleport-controls
-                    static-body="shape: sphere; sphereRadius: 0.02;"
-                    sphere-collider="objects: .cube"
-                    grab
-            />
-            <Entity id="rightController"
-                    vive-controls="hand: right"
-                    teleport-controls
-                    static-body="shape: sphere; sphereRadius: 0.02;"
-                    sphere-collider="objects: .cube"
-                    grab
-            />
-             */}
-          </Entity>
+
+          <Saw
+              id="saw"
+              follow="target: #controllerRight"
+          />
 
           <Lights/>
 
-          <Entity collada-model="#mainTable"
-                  position="0 0 -1"
+          {/*
+           <Entity collada-model="#mainTable"
+           position="0 0 -1"
 
-              // TODO resolve errors and warnings which is caused by wrong normals
-                  static-body="shape: hull;"
-          />
+           // TODO resolve errors and warnings which is caused by wrong normals
+           static-body="shape: hull;"
+           />
+           */}
 
-          <Entity position="0 0 -1">
-            <Entity class="cube" mixin="cube" position="0.35 1.1 0"/>
-            <Entity class="cube" mixin="cube" position="0 1.1 0"/>
-            <Entity class="cube" mixin="cube" position="-0.35 1.1 0"/>
+          <Entity position="0 0 0">
+            <Entity class="cube" mixin="cube" dynamic-body position="0.35 1.1 0"/>
+            <Entity class="cube" mixin="cube" dynamic-body position="0 1.1 0"/>
+            <Entity class="cube" mixin="cube" dynamic-body position="-0.35 1.1 0"/>
           </Entity>
 
           <Entity position="0 0 -3">
@@ -100,15 +98,14 @@ class VRScene extends React.Component {
                     cuttable=""
                     position="-1 0.5 0.8" rotation="0 45 0"
                     width="1"
-                    height="1" depth="1" color="#4CC3D9">
-            </Entity>
-
-            {/* sound="src: #saw-running; autoplay: false; loop: true"> */}
+                    height="1" depth="1" color="#4CC3D9"
+                // sound="src: #saw-running; autoplay: true; loop: true"
+            />
 
             <Entity geometry="primitive: plane; width: 100; height: 100"
                     rotation="-90 0 0"
-                    material="src: #wood-planks; repeat: 100 100">
-            </Entity>
+                    material="src: #wood-planks; repeat: 100 100"
+            />
             <Entity // Workaround for the collider of the ground being to high
                 geometry="primitive: plane; width: 100; height: 100"
                 rotation="-90 0 0"
@@ -117,9 +114,10 @@ class VRScene extends React.Component {
                 material="transparent: true"
             />
           </Entity>
+
         </Scene>
     );
   }
 }
 
-ReactDOM.render(<VRScene/>, document.querySelector(".scene-container"));
+ReactDOM.render(<VRScene/>, document.querySelector("#scene-container"));

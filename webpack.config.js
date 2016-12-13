@@ -31,6 +31,7 @@ module.exports = {
     path: BUILD_DIR,
     publicPath: "/",
   },
+  devtool: "source-map",
   module: {
     noParse: [
       __dirname + "./node_modules/aframe/dist/aframe.js/", // for aframe from NPM
