@@ -46,27 +46,27 @@ class VRScene extends React.Component {
               sphere-collider="objects: .cube;"
               grab
               /*
-              events={{
-                gripdown: () => {
-                  console.log("gripdown");
-                },
-                trackpaddown: () => {
-                  console.log("trackpaddown");
-                },
-                menudown: () => {
-                  console.log("menudown");
-                },
-                systemdown: () => {
-                  console.log("systemdown");
-                },
-                // buttondown: () => {console.log("buttondown");},
-                // touchstart: () => {console.log("touchstart");},
-                triggerdown: () => {
-                  console.log("triggerdown");
-                },
-                // triggerup: () => {console.log("triggerup");},
-              }}
-              */
+               events={{
+               gripdown: () => {
+               console.log("gripdown");
+               },
+               trackpaddown: () => {
+               console.log("trackpaddown");
+               },
+               menudown: () => {
+               console.log("menudown");
+               },
+               systemdown: () => {
+               console.log("systemdown");
+               },
+               // buttondown: () => {console.log("buttondown");},
+               // touchstart: () => {console.log("touchstart");},
+               triggerdown: () => {
+               console.log("triggerdown");
+               },
+               // triggerup: () => {console.log("triggerup");},
+               }}
+               */
           />
 
           <Saw
@@ -92,19 +92,28 @@ class VRScene extends React.Component {
           </Entity>
 
           <Entity position="0 0 -3">
-            <Entity id="firstBox"
-                    geometry="primitive: box"
-                    material="src: #wood-toon"
-                    cuttable=""
-                    position="-1 0.5 0.8" rotation="0 45 0"
-                    width="1"
-                    height="1" depth="1" color="#4CC3D9"
+            <Entity
+                id="firstBox"
+                geometry="primitive: box"
+                material="src: #wood-toon"
+                cuttable="#cutterSphere"
+                position="-1 0.5 0.8" rotation="0 45 0"
+                width="1"
+                height="1"
+                depth="1"
                 // sound="src: #saw-running; autoplay: true; loop: true"
             />
 
-            <Entity geometry="primitive: plane; width: 100; height: 100"
-                    rotation="-90 0 0"
-                    material="src: #wood-planks; repeat: 100 100"
+            <Entity
+                id="cutterSphere"
+                geometry="primitive: sphere"
+                cutter
+            />
+
+            <Entity
+                geometry="primitive: plane; width: 100; height: 100"
+                rotation="-90 0 0"
+                material="src: #wood-planks; repeat: 100 100"
             />
             <Entity // Workaround for the collider of the ground being to high
                 geometry="primitive: plane; width: 100; height: 100"

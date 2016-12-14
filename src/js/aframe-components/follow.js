@@ -21,8 +21,10 @@ AFRAME.registerComponent("follow", {
     this.targetMesh = this.target.getObject3D("mesh");
   },
   tick() {
+    /*
     const matrix = new THREE.Matrix();
     matrix.applyMatrix(this.initialMatrix).applyMatrix(this.targetMesh.matrix);
     this.el.getObject3D("mesh").matrix.applyMatrix(matrix);
+    */
   }
 });
