@@ -16,47 +16,68 @@ AFRAME.registerComponent("cuttable", {
     document.addEventListener("keydown", (evt) => {
       const keyName = evt.key;
 
-      if (keyName === 'Control') {
+      if (keyName === "Control") {
         return;
       }
 
       if (event.ctrlKey) {
         switch (keyName) {
-          case "q":
-            this.addMesh();
-            break;
+        case "q":
+          this.updateBSP();
+          this.unionMeshes();
+          break;
         }
       } else {
+        let currentPos;
+
         switch (keyName) {
-          case "q":
-            this.subtractMesh();
-            break;
+        case "q":
+          this.updateBSP();
+          this.subtractMeshes();
+          break;
+        case "e":
+          currentPos = this.data.cutter.getAttribute("position");
+          currentPos.x += 0.1;
+          this.data.cutter.setAttribute("position", currentPos);
+          break;
+        case "r":
+          currentPos = this.data.cutter.getAttribute("position");
+          currentPos.x -= 0.1;
+          this.data.cutter.setAttribute("position", currentPos);
+          break;
         }
       }
     });
-
-    console.log("data:", this.data.cutter);
   },
   update() {
-    this.updateBSP();
+
   },
-  updateBSP() {
+  updateBSP() { // we do the update inside the modifier functions, right before the BSP is needed
     const cuttableMesh = this.el.getObject3D("mesh");
-    // const cutterMesh = this.data.cutter.getObject3D("mesh");
+    const cutterMesh = this.data.cutter.getObject3D("mesh");
 
-    // console.log(cutterMesh);
-
-    if (!cuttableMesh /*|| cutterMesh*/) {
+    // cancel, if one of the objects is missing
+    if (!cuttableMesh || !cutterMesh) {
       return;
     }
 
-    const cuttableObject = new THREE.Mesh(new THREE.Geometry().fromBufferGeometry(cuttableMesh.geometry));
-    const cutterObject = new THREE.Mesh(new THREE.SphereGeometry(.7, 32, 32));
+    const cuttableWorldMatrix = this.el.object3D.matrixWorld;
+    const cutterWorldMatrix = this.data.cutter.object3D.matrixWorld;
 
-    this.cutterObject = new ThreeBSP(cutterObject);
-    this.cuttableObject = new ThreeBSP(cuttableObject);
+    // create Three meshes out of the scene objects
+    const cuttable = new THREE.Mesh(new THREE.Geometry().fromBufferGeometry(cuttableMesh.geometry));
+    const cutter = new THREE.Mesh(new THREE.Geometry().fromBufferGeometry(cutterMesh.geometry));
+
+    // apply the world matrices from the origin objects
+    cuttable.applyMatrix(cuttableWorldMatrix);
+    cutter.applyMatrix(cutterWorldMatrix);
+
+    this.cuttableObject = new ThreeBSP(cuttable);
+    this.cutterObject = new ThreeBSP(cutter);
   },
-  subtractMesh() {
+  subtractMeshes() {
+    this.updateBSP();
+    console.time("subtract meshes");
     if (!this.cutterObject || !this.cuttableObject) {
       return;
     }
@@ -64,11 +85,13 @@ AFRAME.registerComponent("cuttable", {
     const subtractedMeshBSP = this.cuttableObject.subtract(this.cutterObject);
     const newMesh = subtractedMeshBSP.toMesh();
 
-    this.el.getObject3D("mesh").geometry = newMesh.geometry;
-
-    this.updateBSP();
+    this.el.getObject3D("mesh").geometry = new THREE.BufferGeometry().fromGeometry(newMesh.geometry);
+    console.timeEnd("subtract meshes");
   },
-  addMesh() {
+  unionMeshes() {
+    this.updateBSP();
+    console.time("union meshes");
+
     if (!this.cutterObject || !this.cuttableObject) {
       return;
     }
@@ -76,9 +99,8 @@ AFRAME.registerComponent("cuttable", {
     const summedMeshBSP = this.cuttableObject.union(this.cutterObject);
     const newMesh = summedMeshBSP.toMesh();
 
-    this.el.getObject3D("mesh").geometry = newMesh.geometry;
-
-    this.updateBSP();
+    this.el.getObject3D("mesh").geometry = new THREE.BufferGeometry().fromGeometry(newMesh.geometry);
+    console.timeEnd("union meshes");
   },
   remove() {
 

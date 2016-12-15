@@ -9,6 +9,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "./aframe-components/cuttable";
+import "./aframe-components/cutter";
 import "./aframe-components/extras";
 import "./aframe-components/follow";
 // import "./aframe-components/grab";
@@ -31,7 +32,7 @@ class VRScene extends React.Component {
         <Scene
             debug
             // pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
-            // stats
+            stats
             keyboard-shortcuts="enterVR: true; resetSensor: true"
             physics="gravity: -9.8; debug: false;"
             antialias="true">
@@ -96,19 +97,14 @@ class VRScene extends React.Component {
                 id="firstBox"
                 geometry="primitive: box"
                 material="src: #wood-toon"
-                cuttable="#cutterSphere"
+                cuttable="cutter: #cutterSphere"
                 position="-1 0.5 0.8" rotation="0 45 0"
                 width="1"
                 height="1"
                 depth="1"
                 // sound="src: #saw-running; autoplay: true; loop: true"
-            />
-
-            <Entity
-                id="cutterSphere"
-                geometry="primitive: sphere"
-                cutter
-            />
+            >
+            </Entity>
 
             <Entity
                 geometry="primitive: plane; width: 100; height: 100"
@@ -123,6 +119,13 @@ class VRScene extends React.Component {
                 material="transparent: true"
             />
           </Entity>
+
+          <Entity
+              id="cutterSphere"
+              geometry="primitive: sphere; radius: .7"
+              material="color: #333; wireframe: true"
+              cutter
+          />
 
         </Scene>
     );
