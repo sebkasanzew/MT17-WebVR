@@ -1,3 +1,4 @@
+import "../aframe-components/physics";
 import React, {Component} from "react";
 
 export default class Assets extends Component {
@@ -22,7 +23,6 @@ export default class Assets extends Component {
 
           {/* Objects */}
           <a-mixin id="cube"
-                   dynamic-body="mass: 10; linearDamping: 0.05; angularDamping: 0.05"
                    geometry="primitive: box; height: 0.30; width: 0.30; depth: 0.30"
                    material="color: #EF2D00;"/>
 
