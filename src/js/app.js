@@ -19,7 +19,7 @@ import Assets from "./components/Assets";
 import Camera from "./components/Camera";
 import Controls from "./components/Controls";
 import Lights from "./components/Lights";
-import Saw from "./components/Saw";
+// import Saw from "./components/Saw";
 
 class VRScene extends React.Component {
   constructor(props) {
@@ -70,10 +70,12 @@ class VRScene extends React.Component {
                */
           />
 
+          {/*
           <Saw
               id="saw"
               follow="target: #controllerRight"
           />
+          */}
 
           <Lights/>
 
@@ -86,24 +88,25 @@ class VRScene extends React.Component {
            />
            */}
 
-          <Entity position="0 0 0">
-            <Entity class="cube" mixin="cube" dynamic-body position="0.35 1.1 0"/>
-            <Entity class="cube" mixin="cube" dynamic-body position="0 1.1 0"/>
-            <Entity class="cube" mixin="cube" dynamic-body position="-0.35 1.1 0"/>
-          </Entity>
-
-          <Entity position="0 0 -3">
+          <Entity position="0 0 -2">
             <Entity
                 id="firstBox"
                 geometry="primitive: box"
                 material="src: #wood-toon"
-                cuttable="cutter: #cutterSphere"
-                position="-1 0.5 0.8" rotation="0 45 0"
+                cuttable="cutter: #cutter"
+                position="0 0.5 0.8" rotation="0 30 0"
+                static-body="shape: box;s"
                 width="1"
                 height="1"
                 depth="1"
                 // sound="src: #saw-running; autoplay: true; loop: true"
             >
+            </Entity>
+
+            <Entity position="0 3 1">
+              <Entity class="cube" mixin="cube" dynamic-body position="0.35 0 0"/>
+              <Entity class="cube" mixin="cube" dynamic-body position="0 0 0"/>
+              <Entity class="cube" mixin="cube" dynamic-body position="-0.35 0 0"/>
             </Entity>
 
             <Entity
@@ -121,10 +124,11 @@ class VRScene extends React.Component {
           </Entity>
 
           <Entity
-              id="cutterSphere"
-              geometry="primitive: sphere; radius: .7"
+              id="cutter"
+              geometry="primitive: box; width: 0.1; height: 0.1; depth: 0.1"
               material="color: #333; wireframe: true"
               cutter
+              follow="target: #controllerRight"
           />
 
         </Scene>

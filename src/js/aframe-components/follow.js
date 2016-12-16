@@ -5,26 +5,18 @@ import AFRAME/*, {THREE}*/ from "../../temp/aframe-master";
 
 AFRAME.registerComponent("follow", {
   schema: {
-    // type: "selector",
     target: {type: "selector"}
   },
   init() {
-    /*
-    this.initialPosition = this.el.getAttribute("position");
-    this.initialRotation = this.el.getAttribute("rotation");
-    console.log(this.el.getObject3D("mesh"));
-    */
-    this.initialMatrix = this.el.getObject3D("mesh").matrix;
+
   },
   update() {
-    this.target = this.data.target;
-    this.targetMesh = this.target.getObject3D("mesh");
+
   },
   tick() {
-    /*
-    const matrix = new THREE.Matrix();
-    matrix.applyMatrix(this.initialMatrix).applyMatrix(this.targetMesh.matrix);
-    this.el.getObject3D("mesh").matrix.applyMatrix(matrix);
-    */
+    this.el.setAttribute("position", this.data.target.getAttribute("position"));
+
+    /*const worldMatrix = this.data.target.object3D.matrixWorld;
+    this.el.object3D.applyMatrix(worldMatrix);*/
   }
 });
