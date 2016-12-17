@@ -1,5 +1,4 @@
-//import AFRAME, {THREE} from "aframe";
-import AFRAME from "../../temp/aframe-master";
+import AFRAME from "aframe";
 
 AFRAME.registerComponent("cutter", {
   schema: {},

@@ -1,8 +1,7 @@
-// import "aframe";
-import "../temp/aframe-master";
+import "aframe";
 // import "aframe-animation-component";
 // import "aframe-text-component";
-// import "aframe-teleport-controls";
+import "aframe-teleport-controls";
 import "babel-polyfill";
 import {Entity, Scene} from "aframe-react";
 import React from "react";

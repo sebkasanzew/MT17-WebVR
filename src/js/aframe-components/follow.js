@@ -1,5 +1,4 @@
-// import AFRAME from "aframe";
-import AFRAME/*, {THREE}*/ from "../../temp/aframe-master";
+import AFRAME from "aframe";
 
 "use strict";
 

@@ -33,7 +33,7 @@
   "author": "Sebastian Kasanzew",
   "license": "ISC",
   "dependencies": {
-    "aframe": "^0.3.2",
+    "aframe": "^0.4.0",
     "aframe-animation-component": "^3.0.4",
     "aframe-extras": "^3.1.0",
     "aframe-physics-system": "^1.0.3",
