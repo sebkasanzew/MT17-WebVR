@@ -8,7 +8,7 @@ AFRAME.registerComponent("cuttable", {
   schema: {
     cutter: {
       type: "selector",
-      default: document.querySelector("a-entity[cutter]")
+      default: "a-entity[cutter]"
     }
   },
   init() {
