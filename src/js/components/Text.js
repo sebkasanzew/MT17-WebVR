@@ -1,4 +1,4 @@
-import {Entity} from "aframe-react";
+import { Entity } from "aframe-react";
 import React from "react";
 import AFRAME from "aframe";
 
@@ -8,6 +8,6 @@ export default (props) => {
   delete extraProps.text;
 
   return <Entity
-      text={{text: props.text}} material={{color: props.color}}
+      text={{ text: props.text }} material={{ color: props.color }}
       {...extraProps}/>;
 };

@@ -1,5 +1,6 @@
 import "../aframe-components/physics";
-import React, {Component} from "react";
+import React, { Component } from "react";
+// import "super-hands";
 
 export default class Assets extends Component {
   render() {
@@ -23,9 +24,14 @@ export default class Assets extends Component {
 
           {/* Objects */}
           <a-mixin id="cube"
+                   dynamic-body="shape: box; mass: 2"
+                   /*grabbable=""
+                   hoverable=""
+                   drag-droppable=""*/
                    geometry="primitive: box; height: 0.30; width: 0.30; depth: 0.30"
                    material="color: #EF2D00;"/>
-
+          {/*<a-mixin id="cube-hovered"
+                   material="color: #FFFFFF;"/>*/}
         </a-assets>
     );
   }

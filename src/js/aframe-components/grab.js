@@ -65,12 +65,11 @@ AFRAME.registerComponent("grab", {
 
   tick: function () {
     const hitEl = this.hitEl;
-    let position;
     if (!hitEl) {
       return;
     }
     this.updateDelta();
-    position = hitEl.getComputedAttribute("position");
+    const position = hitEl.getComputedAttribute("position");
     hitEl.setAttribute("position", {
       x: position.x + this.deltaPosition.x,
       y: position.y + this.deltaPosition.y,

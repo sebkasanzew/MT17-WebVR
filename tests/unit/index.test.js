@@ -1,4 +1,4 @@
-import {assert} from "chai";
+import { assert } from "chai";
 import Camera from "../../src/js/components/Camera";
 
 global.AFRAME = {

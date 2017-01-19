@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 
 import Camera from "../../src/js/components/Camera";
-import {Scene, Entity} from "aframe-react";
+import { Scene, Entity } from "aframe-react";
 
 /* global expect */
 

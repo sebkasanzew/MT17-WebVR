@@ -4,7 +4,7 @@ import AFRAME from "aframe";
 
 AFRAME.registerComponent("follow", {
   schema: {
-    target: {type: "selector"}
+    target: { type: "selector" }
   },
   init() {
 

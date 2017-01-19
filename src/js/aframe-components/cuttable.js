@@ -1,4 +1,4 @@
-import AFRAME, {THREE} from "aframe";
+import AFRAME, { THREE } from "aframe";
 
 "use strict";
 
@@ -85,27 +85,27 @@ AFRAME.registerComponent("cuttable", {
 
       if (event.ctrlKey) {
         switch (keyName) {
-        case "q":
-          this.unionMeshes();
-          break;
+          case "q":
+            this.unionMeshes();
+            break;
         }
       } else {
         let currentPos;
 
         switch (keyName) {
-        case "q":
-          this.subtractMeshes();
-          break;
-        case "e":
-          currentPos = this.data.cutter.getAttribute("position");
-          currentPos.x += 0.1;
-          this.data.cutter.setAttribute("position", currentPos);
-          break;
-        case "r":
-          currentPos = this.data.cutter.getAttribute("position");
-          currentPos.x -= 0.1;
-          this.data.cutter.setAttribute("position", currentPos);
-          break;
+          case "q":
+            this.subtractMeshes();
+            break;
+          case "e":
+            currentPos = this.data.cutter.getAttribute("position");
+            currentPos.x += 0.1;
+            this.data.cutter.setAttribute("position", currentPos);
+            break;
+          case "r":
+            currentPos = this.data.cutter.getAttribute("position");
+            currentPos.x -= 0.1;
+            this.data.cutter.setAttribute("position", currentPos);
+            break;
         }
       }
     });

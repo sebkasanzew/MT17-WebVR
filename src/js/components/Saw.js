@@ -1,5 +1,5 @@
-import {Entity} from "aframe-react";
-import React, {Component} from "react";
+import { Entity } from "aframe-react";
+import React, { Component } from "react";
 
 export default class Saw extends Component {
   attachToController() {

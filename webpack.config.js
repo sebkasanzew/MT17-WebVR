@@ -1,14 +1,14 @@
-let path = require("path");
-let webpack = require("webpack");
+const path = require("path");
+const webpack = require("webpack");
 require("babel-polyfill");
 
-let IS_PRODUCTION = process.env.NODE_ENV === "production";
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 const BUILD_DIR = path.resolve(__dirname, "build");
 
 const APP_DIR = path.resolve(__dirname, "src/js");
 
-let PLUGINS = [];
+const PLUGINS = [];
 
 if (IS_PRODUCTION) {
   // Uglify in production.
