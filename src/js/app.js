@@ -86,17 +86,17 @@ class VRScene extends React.Component {
             </Entity>
 
             {/*
-            <Entity position="0 3 1">
-              <a-entity mixin="cube"
-                      class="cube"
-                      position="0.35 0 0"/>
-              <a-entity mixin="cube"
-                      class="cube"
-                      position="0 0 0"/>
-              <a-entity mixin="cube"
-                      class="cube"
-                      position="-0.35 0 0"/>
-            </Entity>
+             <Entity position="0 3 1">
+             <a-entity mixin="cube"
+             class="cube"
+             position="0.35 0 0"/>
+             <a-entity mixin="cube"
+             class="cube"
+             position="0 0 0"/>
+             <a-entity mixin="cube"
+             class="cube"
+             position="-0.35 0 0"/>
+             </Entity>
              */}
 
             <Entity
@@ -113,6 +113,10 @@ class VRScene extends React.Component {
                 material="transparent: true"
             />
           </Entity>
+
+          <Entity obj-model="obj: #scene-obj; mtl: #scene-mtl"
+                  position="0 .01 0"
+                  scale="10 10 10"/>
 
         </Scene>
     );

@@ -13,6 +13,8 @@ export default class Assets extends Component {
 
           {/* Models */}
           <a-asset-item id="mainTable" src="assets/3d/mainTable/IKEA Tisch.dae"/>
+          <a-asset-item id="scene-obj" src="assets/3d/scene/scene.obj"/>
+          <a-asset-item id="scene-mtl" src="assets/3d/scene/scene.mtl"/>
 
           {/* Images */}
           <img id="wood-planks" src="assets/img/tex/re_planks.png"/>
