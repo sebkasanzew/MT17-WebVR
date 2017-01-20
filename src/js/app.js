@@ -1,17 +1,14 @@
-// import "aframe";
-import "../temp/aframe-master";
-// import "aframe-animation-component";
-// import "aframe-text-component";
-// import "aframe-teleport-controls";
+import "aframe";
 import "babel-polyfill";
-import {Entity, Scene} from "aframe-react";
+import { Entity, Scene } from "aframe-react";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./aframe-components/cuttable";
-import "./aframe-components/cutter";
+// import "./aframe-components/cuttable";
+// import "./aframe-components/cutter";
+import "./aframe-components/physics";
 import "./aframe-components/extras";
-import "./aframe-components/follow";
+// import "./aframe-components/follow";
 // import "./aframe-components/grab";
 // import "./aframe-components/aabb-collider";
 
@@ -19,7 +16,12 @@ import Assets from "./components/Assets";
 import Camera from "./components/Camera";
 import Controls from "./components/Controls";
 import Lights from "./components/Lights";
-import Saw from "./components/Saw";
+// import Saw from "./components/Saw";
+
+// import "aframe-animation-component";
+// import "aframe-text-component";
+// import "aframe-teleport-controls";
+// import "super-hands";
 
 class VRScene extends React.Component {
   constructor(props) {
@@ -30,12 +32,13 @@ class VRScene extends React.Component {
   render() {
     return (
         <Scene
-            debug
+            // debug
             // pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
-            stats
-            keyboard-shortcuts="enterVR: true; resetSensor: true"
+            // stats
+            // keyboard-shortcuts="enterVR: true; resetSensor: true"
             physics="gravity: -9.8; debug: false;"
-            antialias="true">
+            antialias="true"
+        >
 
           <Assets/>
 
@@ -45,87 +48,75 @@ class VRScene extends React.Component {
               // teleport-controls="true"
               static-body="shape: sphere; sphereRadius: 0.02;"
               sphere-collider="objects: .cube;"
-              grab
-              /*
-               events={{
-               gripdown: () => {
-               console.log("gripdown");
-               },
-               trackpaddown: () => {
-               console.log("trackpaddown");
-               },
-               menudown: () => {
-               console.log("menudown");
-               },
-               systemdown: () => {
-               console.log("systemdown");
-               },
-               // buttondown: () => {console.log("buttondown");},
-               // touchstart: () => {console.log("touchstart");},
-               triggerdown: () => {
-               console.log("triggerdown");
-               },
-               // triggerup: () => {console.log("triggerup");},
-               }}
-               */
+              grab=""
           />
 
-          <Saw
-              id="saw"
-              follow="target: #controllerRight"
-          />
+          <Lights>
+            <a-entity shadow-light="type: directional; color: #FFF; intensity: 1.0; castShadow: true"
+                      position="-0.5 1 1"/>
+          </Lights>
 
-          <Lights/>
-
-          {/*
-           <Entity collada-model="#mainTable"
-           position="0 0 -1"
-
-           // TODO resolve errors and warnings which is caused by wrong normals
-           static-body="shape: hull;"
-           />
-           */}
-
-          <Entity position="0 0 0">
-            <Entity class="cube" mixin="cube" dynamic-body position="0.35 1.1 0"/>
-            <Entity class="cube" mixin="cube" dynamic-body position="0 1.1 0"/>
-            <Entity class="cube" mixin="cube" dynamic-body position="-0.35 1.1 0"/>
-          </Entity>
-
-          <Entity position="0 0 -3">
+          <Entity position="0 0 -2">
             <Entity
                 id="firstBox"
                 geometry="primitive: box"
                 material="src: #wood-toon"
-                cuttable="cutter: #cutterSphere"
-                position="-1 0.5 0.8" rotation="0 45 0"
+                position="0 0.5 0.8"
+                rotation="0 30 0"
+                static-body="shape: box;"
                 width="1"
                 height="1"
                 depth="1"
+                // shadow="receive: true; cast: true;"
                 // sound="src: #saw-running; autoplay: true; loop: true"
             >
             </Entity>
+
+
+            <Entity position="0 3 1">
+              <Entity mixin="cube"
+                      className="cube"
+                      position="0.35 0 0"/>
+              <Entity mixin="cube"
+                      className="cube"
+                      position="0 0 0"/>
+              <Entity mixin="cube"
+                      className="cube"
+                      position="-0.35 0 0"/>
+            </Entity>
+
+            {/*
+             <Entity position="0 3 1">
+             <a-entity mixin="cube"
+             class="cube"
+             position="0.35 0 0"/>
+             <a-entity mixin="cube"
+             class="cube"
+             position="0 0 0"/>
+             <a-entity mixin="cube"
+             class="cube"
+             position="-0.35 0 0"/>
+             </Entity>
+             */}
 
             <Entity
                 geometry="primitive: plane; width: 100; height: 100"
                 rotation="-90 0 0"
                 material="src: #wood-planks; repeat: 100 100"
+                shadow="receive: true;"
             />
             <Entity // Workaround for the collider of the ground being to high
                 geometry="primitive: plane; width: 100; height: 100"
                 rotation="-90 0 0"
                 position="0 -0.1 0"
-                static-body=""
+                static-body
                 material="transparent: true"
             />
           </Entity>
 
-          <Entity
-              id="cutterSphere"
-              geometry="primitive: sphere; radius: .7"
-              material="color: #333; wireframe: true"
-              cutter
-          />
+          <Entity obj-model="obj: #scene-obj; mtl: #scene-mtl"
+                  position="0 .01 0"
+                  scale="10 10 10"/>
 
         </Scene>
     );

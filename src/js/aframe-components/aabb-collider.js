@@ -13,8 +13,8 @@ const THREE = AFRAME.THREE;
  */
 AFRAME.registerComponent("aabb-collider", {
   schema: {
-    objects: {default: ""},
-    state: {default: "collided"}
+    objects: { default: "" },
+    state: { default: "collided" }
   },
 
   init() {
@@ -62,7 +62,7 @@ AFRAME.registerComponent("aabb-collider", {
       collisions.forEach(handleHit);
       // No collisions.
       if (collisions.length === 0) {
-        self.el.emit("hit", {el: null});
+        self.el.emit("hit", { el: null });
       }
       // Updated the state of the elements that are not intersected anymore.
       this.collisions.filter(function (el) {
@@ -75,21 +75,18 @@ AFRAME.registerComponent("aabb-collider", {
 
       // AABB collision detection
       function intersect(el) {
-        let intersected;
         const mesh = el.getObject3D("mesh");
-        let elMin;
-        let elMax;
         if (!mesh) {
           return;
         }
         boundingBox.setFromObject(mesh);
-        elMin = boundingBox.min;
-        elMax = boundingBox.max;
+        const elMin = boundingBox.min;
+        const elMax = boundingBox.max;
         // Bounding boxes are always aligned with the world coordinate system.
         // The collision test checks for the conditions where cubes intersect.
         // It's an extension to 3 dimensions of this approach (with the condition negated)
         // https://www.youtube.com/watch?v=ghqD3e37R7E
-        intersected = (self.elMin.x <= elMax.x && self.elMax.x >= elMin.x) &&
+        const intersected = (self.elMin.x <= elMax.x && self.elMax.x >= elMin.x) &&
             (self.elMin.y <= elMax.y && self.elMax.y >= elMin.y) &&
             (self.elMin.z <= elMax.z && self.elMax.z >= elMin.z);
         if (!intersected) {
@@ -101,7 +98,7 @@ AFRAME.registerComponent("aabb-collider", {
       function handleHit(hitEl) {
         hitEl.emit("hit");
         hitEl.addState(self.data.state);
-        self.el.emit("hit", {el: hitEl});
+        self.el.emit("hit", { el: hitEl });
       }
 
       function updateBoundingBox() {

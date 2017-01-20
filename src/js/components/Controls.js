@@ -1,5 +1,6 @@
-import {Entity} from "aframe-react";
-import React, {Component} from "react";
+import { Entity } from "aframe-react";
+import React, { Component } from "react";
+import "aframe-auto-detect-controllers-component";
 
 // import Saw from "../components/Saw";
 
@@ -9,23 +10,18 @@ export default class Controls extends Component {
   }
 
   render() {
-    /*
-     const events = this.props.events;
-     // delete this.props.events;
-     console.log(events);
-     */
-
     return (
         <Entity>
-          {/* TODO figure out why the "Render count or primcount is 0" warnings appear */}
           <Entity
               id="controllerLeft"
-              vive-controls="hand: left"
+              auto-detect-controllers="hand: left;"
+              // vive-controls="hand: left;"
               {... this.props}
           />
           <Entity
               id="controllerRight"
-              vive-controls="hand: right"
+              auto-detect-controllers="hand: right;"
+              // vive-controls="hand: right;"
               {... this.props}
           />
           {this.props.children}
