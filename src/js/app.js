@@ -54,6 +54,8 @@ class VRScene extends React.Component {
           <Lights>
             <a-entity shadow-light="type: directional; color: #FFF; intensity: 1.0; castShadow: true"
                       position="-0.5 1 1"/>
+            <a-entity light="type: directional; color: #FFF; intensity: 1.0;"
+                      position="-0.5 1 1"/>
           </Lights>
 
           <Entity position="0 0 -2">
@@ -85,26 +87,6 @@ class VRScene extends React.Component {
                       position="-0.35 0 0"/>
             </Entity>
 
-            {/*
-             <Entity position="0 3 1">
-             <a-entity mixin="cube"
-             class="cube"
-             position="0.35 0 0"/>
-             <a-entity mixin="cube"
-             class="cube"
-             position="0 0 0"/>
-             <a-entity mixin="cube"
-             class="cube"
-             position="-0.35 0 0"/>
-             </Entity>
-             */}
-
-            <Entity
-                geometry="primitive: plane; width: 100; height: 100"
-                rotation="-90 0 0"
-                material="src: #wood-planks; repeat: 100 100"
-                shadow="receive: true;"
-            />
             <Entity // Workaround for the collider of the ground being to high
                 geometry="primitive: plane; width: 100; height: 100"
                 rotation="-90 0 0"
@@ -115,8 +97,7 @@ class VRScene extends React.Component {
           </Entity>
 
           <Entity obj-model="obj: #scene-obj; mtl: #scene-mtl"
-                  position="0 .01 0"
-                  scale="10 10 10"/>
+                  position="4 .01 -2.5"/>
 
         </Scene>
     );
