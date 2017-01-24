@@ -15,10 +15,14 @@ export default class Assets extends Component {
           <a-asset-item id="mainTable" src="assets/3d/mainTable/IKEA Tisch.dae"/>
           <a-asset-item id="scene-obj" src="assets/3d/scene/scene.obj"/>
           <a-asset-item id="scene-mtl" src="assets/3d/scene/scene.mtl"/>
+          {/*<a-asset-item id="ground-obj" src="assets/3d/scene/Ground.obj"/>
+          <a-asset-item id="ground-mtl" src="assets/3d/scene/Ground.mtl"/>*/}
 
           {/* Images */}
           <img id="wood-planks" src="assets/img/tex/re_planks.png"/>
           <img id="wood-toon" src="assets/img/tex/wood_texture_by_dellot.jpg"/>
+          <img id="stars" src="assets/img/360/stars_optimized.png"/>
+          <img id="ground" src="assets/3d/scene/mat/GroundCompleteMap_optimized.png"/>
 
           {/* Materials */}
           <a-mixin id="tool-color-prime" material="color: green"/>

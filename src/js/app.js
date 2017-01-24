@@ -51,14 +51,10 @@ class VRScene extends React.Component {
               grab=""
           />
 
-          <Lights>
-            <a-entity shadow-light="type: directional; color: #FFF; intensity: 1.0; castShadow: true"
-                      position="-0.5 1 1"/>
-            <a-entity light="type: directional; color: #FFF; intensity: 1.0;"
-                      position="-0.5 1 1"/>
-          </Lights>
+          <Lights/>
 
-          <Entity position="0 0 -2">
+          <Entity position="0 0 -1">
+            {/*
             <Entity
                 id="firstBox"
                 geometry="primitive: box"
@@ -71,33 +67,47 @@ class VRScene extends React.Component {
                 depth="1"
                 // shadow="receive: true; cast: true;"
                 // sound="src: #saw-running; autoplay: true; loop: true"
-            >
-            </Entity>
+            />
+            */}
 
-
-            <Entity position="0 3 1">
+            <Entity position="0 2 .5">
               <Entity mixin="cube"
+                      shadow="cast: true;"
                       className="cube"
                       position="0.35 0 0"/>
               <Entity mixin="cube"
+                      shadow="cast: true;"
                       className="cube"
                       position="0 0 0"/>
               <Entity mixin="cube"
+                      shadow="cast: true;"
                       className="cube"
                       position="-0.35 0 0"/>
             </Entity>
 
+            <Entity
+                geometry="primitive: plane; width: 10; height: 10"
+                rotation="-90 0 0"
+                position="4 0.05 -2.5"
+                shadow="receive: true;"
+                material="src: #ground;" // color: #FFF
+            />
+
             <Entity // Workaround for the collider of the ground being to high
                 geometry="primitive: plane; width: 100; height: 100"
                 rotation="-90 0 0"
-                position="0 -0.1 0"
+                position="0 -0.05 0"
                 static-body
                 material="transparent: true"
             />
+
           </Entity>
 
           <Entity obj-model="obj: #scene-obj; mtl: #scene-mtl"
+                  // shadow="receive: true;"
                   position="4 .01 -2.5"/>
+
+          <a-sky src="#stars"/>
 
         </Scene>
     );
