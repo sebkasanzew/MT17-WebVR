@@ -58,20 +58,20 @@ class VRScene extends React.Component {
 
           <Entity position="0 0 -1">
             {/*
-            <Entity
-                id="firstBox"
-                geometry="primitive: box"
-                material="src: #wood-toon"
-                position="0 0.5 0.8"
-                rotation="0 30 0"
-                static-body="shape: box;"
-                width="1"
-                height="1"
-                depth="1"
-                // shadow="receive: true; cast: true;"
-                // sound="src: #saw-running; autoplay: true; loop: true"
-            />
-            */}
+             <Entity
+             id="firstBox"
+             geometry="primitive: box"
+             material="src: #wood-toon"
+             position="0 0.5 0.8"
+             rotation="0 30 0"
+             static-body="shape: box;"
+             width="1"
+             height="1"
+             depth="1"
+             // shadow="receive: true; cast: true;"
+             // sound="src: #saw-running; autoplay: true; loop: true"
+             />
+             */}
 
             <Entity position="0 2 .5">
               <Entity mixin="cube"
@@ -110,15 +110,43 @@ class VRScene extends React.Component {
 
           </Entity>
 
-          <Entity id="groundObject"
+          <Entity id="table"
+                  obj-model="obj: #table-obj; mtl: #table-mtl"
+                  position="-0.2 0 -1">
+            <Entity id="table-collider"
+                    position="0 0.27 0"
+                    geometry="primitive: box;"
+                    scale="1.38 0.61 0.57"
+                    static-body="shape: box"
+                    material="visible: false"/>
+          </Entity>
+
+          <Entity id="shelf"
+                  obj-model="obj: #shelf-obj; mtl: #shelf-mtl"
+                  position="1.2 0 0">
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 0.13 0"/>
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 0.53 0"/>
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 0.97 0"/>
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 1.38 0"/>
+            <Entity mixin="shelf-collider-vertical"
+                    position="0 0.7 0.92"/>
+            <Entity mixin="shelf-collider-vertical"
+                    position="0 0.7 -0.87"/>
+          </Entity>
+
+          <Entity id="ground"
                   obj-model="obj: #ground-obj; mtl: #ground-mtl"/>
 
-          <Entity id="sceneObject"
+          <Entity id="scene"
                   obj-model="obj: #scene-obj; mtl: #scene-mtl"
                   shadow="receive: true;"/>
 
           {/*<Entity id="sceneObject"
-                  gltf-model="asset: #scene-gltf;"/>*/}
+           gltf-model="asset: #scene-gltf;"/>*/}
 
           <a-sky src="#stars"/>
 

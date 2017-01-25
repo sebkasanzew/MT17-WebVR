@@ -12,5 +12,5 @@ newmtl Material_Ground
 	Kd 1.000000 1.000000 1.000000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka mat\GroundCompleteMap_optimized.png
-	map_Kd mat\GroundCompleteMap_optimized.png
+	map_Ka scene\mat\GroundCompleteMap_optimized.png
+	map_Kd scene\mat\GroundCompleteMap_optimized.png
