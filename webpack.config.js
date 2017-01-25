@@ -1,23 +1,47 @@
 const path = require("path");
 const webpack = require("webpack");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+
 require("babel-polyfill");
 
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
+const PROJECT_DIR = path.resolve(__dirname);
 const BUILD_DIR = path.resolve(__dirname, "build");
-
 const APP_DIR = path.resolve(__dirname, "src/js");
 
 const PLUGINS = [];
 
 if (IS_PRODUCTION) {
-  // Uglify in production.
   PLUGINS.push(
+      new webpack.DefinePlugin({
+        "process.env": {
+          NODE_ENV: JSON.stringify("production")
+        }
+      }),
+      // new webpack.optimize.CommonsChunkPlugin("common.js"),
+      new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
         mangle: {
           except: ["$super", "$", "exports", "require"]
         },
-        sourcemap: false
+        compress: {
+          warnings: false, // Suppress uglification warnings
+          pure_getters: true,
+          unsafe: true,
+          unsafe_comps: true,
+          screw_ie8: true
+        },
+        output: {
+          comments: false,
+        },
+        exclude: [/\.min\.js$/gi] // skip pre-minified libs
+      }),
+      new webpack.optimize.AggressiveMergingPlugin(),
+      new CleanWebpackPlugin(["build"], {
+        root: PROJECT_DIR,
+        verbose: true,
+        dry: false,
       })
   );
 }
@@ -27,11 +51,11 @@ module.exports = {
   output: {
     // Bundle will be served at /bundle.js locally.
     filename: "bundle.js",
-    // Bundle will be built at ./src/media/js.
+    // Bundle will be built at ./build.
     path: BUILD_DIR,
     publicPath: "/",
   },
-  devtool: "source-map",
+  devtool: "cheap-module-source-map",
   module: {
     noParse: [
       __dirname + "./node_modules/aframe/dist/aframe.js/", // for aframe from NPM
@@ -47,26 +71,26 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: "style-loader!css-loader",
       },
       {
         test: /\.json$/,
-        loader: "json-loader"
+        loader: "json-loader",
       },
       {
         // Images
-        test: /\.png|jpg$/,
-        loader: "url-loader?limit100000",
+        test: /\.(png|jpg)$/,
+        loader: "file-loader?name=assets/img/[name].[ext]",
       },
       {
         // Sound
-        test: /\.ogg|mp3$/,
-        loader: "url-loader?limit10000",
+        test: /\.(ogg|mp3)$/,
+        loader: "file-loader?name=assets/sound/[hash].[ext]",
       },
       {
         // Models
-        test: /\.dae|gltf$/,
-        loader: "url-loader?limit10000",
+        test: /\.(dae|gltf|obj|mtl)$/,
+        loader: "file-loader?name=assets/3d/[name].[ext]",
       }
     ],
   },

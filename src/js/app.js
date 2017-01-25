@@ -4,6 +4,8 @@ import { Entity, Scene } from "aframe-react";
 import React from "react";
 import ReactDOM from "react-dom";
 
+import "file?name=[name].[ext]!../index.html";
+
 // import "./aframe-components/cuttable";
 // import "./aframe-components/cutter";
 import "./aframe-components/physics";
@@ -18,6 +20,7 @@ import Controls from "./components/Controls";
 import Lights from "./components/Lights";
 // import Saw from "./components/Saw";
 
+import "aframe-gltf/dist/aframe-gltf";
 // import "aframe-animation-component";
 // import "aframe-text-component";
 // import "aframe-teleport-controls";
@@ -84,14 +87,17 @@ class VRScene extends React.Component {
                       className="cube"
                       position="-0.35 0 0"/>
             </Entity>
+            {/*
+             <Entity
+             id="groundObject"
+             geometry="primitive: plane; width: 10; height: 10"
+             rotation="-90 0 0"
+             position="0 0 0"
+             shadow="receive: true;"
+             material="src: #ground;" // color: #FFF
+             />
+             */}
 
-            <Entity
-                geometry="primitive: plane; width: 10; height: 10"
-                rotation="-90 0 0"
-                position="4 0.05 -2.5"
-                shadow="receive: true;"
-                material="src: #ground;" // color: #FFF
-            />
 
             <Entity // Workaround for the collider of the ground being to high
                 geometry="primitive: plane; width: 100; height: 100"
@@ -99,13 +105,20 @@ class VRScene extends React.Component {
                 position="0 -0.05 0"
                 static-body
                 material="transparent: true"
+                visible="false"
             />
 
           </Entity>
 
-          <Entity obj-model="obj: #scene-obj; mtl: #scene-mtl"
-                  // shadow="receive: true;"
-                  position="4 .01 -2.5"/>
+          <Entity id="groundObject"
+                  obj-model="obj: #ground-obj; mtl: #ground-mtl"/>
+
+          <Entity id="sceneObject"
+                  obj-model="obj: #scene-obj; mtl: #scene-mtl"
+                  shadow="receive: true;"/>
+
+          {/*<Entity id="sceneObject"
+                  gltf-model="asset: #scene-gltf;"/>*/}
 
           <a-sky src="#stars"/>
 

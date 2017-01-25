@@ -3,13 +3,15 @@
   "version": "0.0.1",
   "description": "A virtual reality experience with tools",
   "scripts": {
+    "build:p": "set NODE_ENV=production&&webpack --progress -p",
     "build": "webpack",
     "serve": "./node_modules/.bin/webpack-dev-server --content-base src --progress --watch --history-api-fallback --inline --hot --host 0.0.0.0 --port 9090",
     "lint": "./node_modules/.bin/eslint -c .eslintrc src/js/** tests/**",
     "test:ci": "mocha --compilers js:babel-register tests/unit",
     "test": "npm run test:ci -- --watch",
     "test:react:ci": "jest",
-    "test:react": "npm run test:react:ci -- --watch"
+    "test:react": "npm run test:react:ci -- --watch",
+    "obj2gltf": "node ./node_modules/obj2gltf/bin/obj2gltf.js"
   },
   "jest": {
     "moduleDirectories": [
@@ -37,6 +39,7 @@
     "aframe-animation-component": "^3.2.0",
     "aframe-auto-detect-controllers-component": "^0.1.4",
     "aframe-extras": "^3.2.2",
+    "aframe-gltf": "^1.1.0",
     "aframe-physics-system": "^1.2.0",
     "aframe-react": "^3.4.1",
     "aframe-teleport-controls": "^0.1.0",
@@ -59,6 +62,7 @@
     "babel-register": "^6.18.0",
     "babel-runtime": "^6.20.0",
     "chai": "^3.5.0",
+    "clean-webpack-plugin": "^0.1.15",
     "css-loader": "^0.26.1",
     "eslint": "^3.12.1",
     "eslint-config-babel": "^6.0.0",
@@ -68,9 +72,11 @@
     "eslint-plugin-jest": "^1.0.2",
     "eslint-plugin-mocha": "^4.7.0",
     "eslint-plugin-react": "^6.8.0",
+    "file-loader": "^0.9.0",
     "jest": "^18.0.0",
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
+    "obj2gltf": "^0.1.7",
     "react-test-renderer": "^15.4.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
