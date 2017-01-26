@@ -32,7 +32,9 @@ export default class Assets extends Component {
     // Images
     const woodToon = require("../../assets/img/tex/wood_texture_by_dellot.jpg");
     const stars = require("../../assets/img/360/stars_optimized.png");
-    // const ground = require("../../assets/img/tex/GroundCompleteMap_optimized.png");
+    require("../../assets/img/tex/GroundCompleteMap_optimized.png");
+    require("../../assets/3d/shelf/COM_Deco_IndecoA_SteelShelf01_D01.tga.png");
+    require("../../assets/3d/table/COM_Deco_OutdecoB_WoodTable01_D01.tga.png");
 
     return (
         <a-assets timeout="10000">
@@ -65,9 +67,9 @@ export default class Assets extends Component {
 
           {/* Objects */}
           <a-mixin id="cube"
-                   dynamic-body="shape: box; mass: 2"
-                   geometry="primitive: box; height: 0.30; width: 0.30; depth: 0.30"
-                   material="color: #EF2D00;"/>
+                   dynamic-body="shape: box; mass: 1; angularDamping: 0; linearDamping: 0"
+                   geometry="primitive: box; height: 0.35; width: 0.2; depth: 0.05"
+                   material="color: #AAA;"/>
           <a-mixin id="shelf-collider-horizontal"
                    geometry="primitive: box;"
                    scale="0.5 0.03 1.8"
@@ -75,8 +77,7 @@ export default class Assets extends Component {
                    material="visible: false"/>
           <a-mixin id="shelf-collider-vertical"
                    geometry="primitive: box;"
-                   rotation="90 0 0"
-                   scale="0.5 0.03 1.8"
+                   scale="0.03 0.5 1.8"
                    static-body="shape: box"
                    material="visible: false"/>
           {/*<a-mixin id="cube-hovered"

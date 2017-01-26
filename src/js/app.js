@@ -18,6 +18,7 @@ import Assets from "./components/Assets";
 import Camera from "./components/Camera";
 import Controls from "./components/Controls";
 import Lights from "./components/Lights";
+import Domino from "./components/Domino";
 // import Saw from "./components/Saw";
 
 import "aframe-gltf/dist/aframe-gltf";
@@ -32,14 +33,49 @@ class VRScene extends React.Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    console.log("Did mount");
+
+    const scene = document.querySelector("a-scene");
+    if (scene.hasLoaded) {
+      run();
+    } else {
+      scene.addEventListener("loaded", run);
+    }
+    function run() {
+      console.log("HAS LOADED");
+
+      setTimeout(function() {
+
+      }, 3000);
+    }
+  }
+
   render() {
+    const dominoStack = [];
+
+    for (let i = 0; i < 20; i++) {
+      const position = `0 1.6 ${-.8 + (i / 10)}`;
+
+      dominoStack.push(<Entity mixin="cube"
+                               position={position}/>);
+    }
+
     return (
         <Scene
             // debug
-            // pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
+            // pool__domino="mixin: cube; size: 10"
             // stats
             // keyboard-shortcuts="enterVR: true; resetSensor: true"
-            physics="gravity: -9.8; debug: false;"
+            physics="gravity: -9.8;
+                      debug: false;
+                      friction: .1;
+                      restitution: .3;
+                      maxInterval: 0.0667;
+                      contactEquationStiffness: 1e8;
+                      contactEquationRelaxation: 3;
+                      frictionEquationStiffness: 1e8;
+                      frictionEquationRegularization: 3;"
             antialias="true"
         >
 
@@ -48,7 +84,6 @@ class VRScene extends React.Component {
           <Camera/>
 
           <Controls
-              // teleport-controls="true"
               static-body="shape: sphere; sphereRadius: 0.02;"
               sphere-collider="objects: .cube;"
               grab=""
@@ -56,48 +91,24 @@ class VRScene extends React.Component {
 
           <Lights/>
 
-          <Entity position="0 0 -1">
+          <Entity id="work-area"
+                  position="0 0 -.8">
             {/*
-             <Entity
-             id="firstBox"
-             geometry="primitive: box"
-             material="src: #wood-toon"
-             position="0 0.5 0.8"
-             rotation="0 30 0"
-             static-body="shape: box;"
-             width="1"
-             height="1"
-             depth="1"
-             // shadow="receive: true; cast: true;"
-             // sound="src: #saw-running; autoplay: true; loop: true"
-             />
+             <Entity position="0 1 0">
+             <Entity mixin="cube"
+             shadow="cast: true;"
+             className="cube"
+             position="0.35 0 0"/>
+             <Entity mixin="cube"
+             shadow="cast: true;"
+             className="cube"
+             position="0 0 0"/>
+             <Entity mixin="cube"
+             shadow="cast: true;"
+             className="cube"
+             position="-0.35 0 0"/>
+             </Entity>
              */}
-
-            <Entity position="0 2 .5">
-              <Entity mixin="cube"
-                      shadow="cast: true;"
-                      className="cube"
-                      position="0.35 0 0"/>
-              <Entity mixin="cube"
-                      shadow="cast: true;"
-                      className="cube"
-                      position="0 0 0"/>
-              <Entity mixin="cube"
-                      shadow="cast: true;"
-                      className="cube"
-                      position="-0.35 0 0"/>
-            </Entity>
-            {/*
-             <Entity
-             id="groundObject"
-             geometry="primitive: plane; width: 10; height: 10"
-             rotation="-90 0 0"
-             position="0 0 0"
-             shadow="receive: true;"
-             material="src: #ground;" // color: #FFF
-             />
-             */}
-
 
             <Entity // Workaround for the collider of the ground being to high
                 geometry="primitive: plane; width: 100; height: 100"
@@ -135,7 +146,9 @@ class VRScene extends React.Component {
             <Entity mixin="shelf-collider-vertical"
                     position="0 0.7 0.92"/>
             <Entity mixin="shelf-collider-vertical"
-                    position="0 0.7 -0.87"/>
+                    position="0 0.7 -0.87"/>{/**/}
+
+            <Domino/>
           </Entity>
 
           <Entity id="ground"
