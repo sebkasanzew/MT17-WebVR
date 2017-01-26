@@ -6,4 +6,4 @@ import extras from "aframe-extras";
 AFRAME.registerComponent("sphere-collider", extras.misc["sphere-collider"]);
 AFRAME.registerComponent("grab", extras.misc.grab);
 
-// extras.shadows.registerAll();
+extras.shadows.registerAll();
