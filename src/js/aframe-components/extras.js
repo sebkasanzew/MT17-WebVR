@@ -1,8 +1,9 @@
+import AFRAME from "aframe";
 import extras from "aframe-extras";
 
-export default () => {
-  // TODO register only used components
-  console.log("extras:", extras);
+// extras.misc.registerAll();
 
-  extras.registerAll();
-};
+AFRAME.registerComponent("sphere-collider", extras.misc["sphere-collider"]);
+AFRAME.registerComponent("grab", extras.misc.grab);
+
+extras.shadows.registerAll();

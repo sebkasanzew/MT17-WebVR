@@ -1,9 +1,12 @@
-import {Entity} from "aframe-react";
+import { Entity } from "aframe-react";
 import React from "react";
 
 export default (props) => (
     <Entity {...props}>
-      <Entity light="type: ambient; color: #BBB"/>
-      <Entity light="type: directional; color: #FFF; intensity: 0.6;" position="-0.5 1 1"/>
+      <Entity id="ambient-light"
+              light="type: ambient; color: #BBF; intensity: 0.3"/>
+      <Entity id="sun-light"
+              shadow-light="type: directional; color: #DDFFFF; intensity: 1.5; castShadow: true"
+              position="-4 5 3"/>
     </Entity>
 );

@@ -1,22 +1,31 @@
 import "aframe";
-import "aframe-animation-component";
-import "aframe-text-component";
 import "babel-polyfill";
-import {Entity, Scene} from "aframe-react";
+import { Entity, Scene } from "aframe-react";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./aframe-components/cuttable";
-import "./aframe-components/extras";
+import "file?name=[name].[ext]!../index.html";
+
+// import "./aframe-components/cuttable";
+// import "./aframe-components/cutter";
 import "./aframe-components/physics";
-import "./aframe-components/grab";
-import "./aframe-components/aabb-collider";
+import "./aframe-components/extras";
+// import "./aframe-components/follow";
+// import "./aframe-components/grab";
+// import "./aframe-components/aabb-collider";
 
 import Assets from "./components/Assets";
 import Camera from "./components/Camera";
+import Controls from "./components/Controls";
 import Lights from "./components/Lights";
+import Domino from "./components/Domino";
+// import Saw from "./components/Saw";
 
-import "./sandbox/vive-hands";
+import "aframe-gltf/dist/aframe-gltf";
+// import "aframe-animation-component";
+// import "aframe-text-component";
+// import "aframe-teleport-controls";
+// import "super-hands";
 
 class VRScene extends React.Component {
   constructor(props) {
@@ -24,74 +33,139 @@ class VRScene extends React.Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    console.log("Did mount");
+
+    const scene = document.querySelector("a-scene");
+    if (scene.hasLoaded) {
+      run();
+    } else {
+      scene.addEventListener("loaded", run);
+    }
+    function run() {
+      console.log("HAS LOADED");
+
+      setTimeout(function() {
+
+      }, 3000);
+    }
+  }
+
   render() {
+    const dominoStack = [];
+
+    for (let i = 0; i < 20; i++) {
+      const position = `0 1.6 ${-.8 + (i / 10)}`;
+
+      dominoStack.push(<Entity mixin="cube"
+                               position={position}/>);
+    }
+
     return (
         <Scene
             // debug
-            // pool="mixin: board; size: 10" -> TODO for aframe 0.4.0
+            // pool__domino="mixin: cube; size: 10"
             // stats
-            keyboard-shortcuts="enterVR: true; resetSensor: true"
-            physics="gravity: -9.8"
-            antialias="true">
+            // keyboard-shortcuts="enterVR: true; resetSensor: true"
+            physics="gravity: -9.8;
+                      debug: false;
+                      friction: .1;
+                      restitution: .3;
+                      maxInterval: 0.0667;
+                      contactEquationStiffness: 1e8;
+                      contactEquationRelaxation: 3;
+                      frictionEquationStiffness: 1e8;
+                      frictionEquationRegularization: 3;"
+            antialias="true"
+        >
 
           <Assets/>
 
           <Camera/>
 
-          <Lights/>
-
-          <Entity collada-model="#mainTable"
-                  position="2 0 -1"
-              /*
-               TODO resolve warnings which is caused by asynchronous calls/loading
-               static-body="shape: hull;"
-               */
+          <Controls
+              static-body="shape: sphere; sphereRadius: 0.02;"
+              sphere-collider="objects: .cube;"
+              grab=""
           />
 
-          <Entity position="0 0 -1">
-            <Entity class="cube" mixin="cube" position="0.30 1.65 0"/>
-            <Entity class="cube" mixin="cube" position="0 1.95 0"/>
-            <Entity class="cube" mixin="cube" position="-0.30 1.65 0"/>
+          <Lights/>
 
-            <Entity class="cube" mixin="cube" position="0.60 1.35 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 1.05 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 0.45 0"/>
-            <Entity class="cube" mixin="cube" position="0.60 0.15 0"/>
+          <Entity id="work-area"
+                  position="0 0 -.8">
+            {/*
+             <Entity position="0 1 0">
+             <Entity mixin="cube"
+             shadow="cast: true;"
+             className="cube"
+             position="0.35 0 0"/>
+             <Entity mixin="cube"
+             shadow="cast: true;"
+             className="cube"
+             position="0 0 0"/>
+             <Entity mixin="cube"
+             shadow="cast: true;"
+             className="cube"
+             position="-0.35 0 0"/>
+             </Entity>
+             */}
 
-            <Entity class="cube" mixin="cube" position="0.30 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="0 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="-0.30 0.75 0"/>
+            <Entity // Workaround for the collider of the ground being to high
+                geometry="primitive: plane; width: 100; height: 100"
+                rotation="-90 0 0"
+                position="0 -0.05 0"
+                static-body
+                material="transparent: true"
+                visible="false"
+            />
 
-            <Entity class="cube" mixin="cube" position="-0.60 1.35 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 1.05 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 0.75 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 0.45 0"/>
-            <Entity class="cube" mixin="cube" position="-0.60 0.15 0"/>
           </Entity>
 
-          <Entity position="0 0 -3">
-            <Entity id="firstBox"
-                    geometry="primitive: box"
-                    material="src: #wood-toon"
-                    cuttable=""
-                    position="-1 0.5 0.8" rotation="0 45 0"
-                    width="1"
-                    height="1" depth="1" color="#4CC3D9">
-            </Entity>
-
-            {/* sound="src: #saw-running; autoplay: false; loop: true"> */}
-
-            <Entity geometry="primitive: plane; width: 100; height: 100"
-                    rotation="-90 0 0"
-                    static-body=""
-                    material="src: #wood-planks; repeat: 100 100">
-            </Entity>
+          <Entity id="table"
+                  obj-model="obj: #table-obj; mtl: #table-mtl"
+                  position="-0.2 0 -1">
+            <Entity id="table-collider"
+                    position="0 0.27 0"
+                    geometry="primitive: box;"
+                    scale="1.38 0.61 0.57"
+                    static-body="shape: box"
+                    material="visible: false"/>
           </Entity>
+
+          <Entity id="shelf"
+                  obj-model="obj: #shelf-obj; mtl: #shelf-mtl"
+                  position="1.2 0 0">
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 0.13 0"/>
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 0.53 0"/>
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 0.97 0"/>
+            <Entity mixin="shelf-collider-horizontal"
+                    position="0 1.38 0"/>
+            <Entity mixin="shelf-collider-vertical"
+                    position="0 0.7 0.92"/>
+            <Entity mixin="shelf-collider-vertical"
+                    position="0 0.7 -0.87"/>{/**/}
+
+            <Domino/>
+          </Entity>
+
+          <Entity id="ground"
+                  obj-model="obj: #ground-obj; mtl: #ground-mtl"/>
+
+          <Entity id="scene"
+                  obj-model="obj: #scene-obj; mtl: #scene-mtl"
+                  shadow="receive: true;"/>
+
+          {/*<Entity id="sceneObject"
+           gltf-model="asset: #scene-gltf;"/>*/}
+
+          <a-sky src="#stars"/>
 
         </Scene>
     );
   }
 }
 
-ReactDOM.render(<VRScene/>, document.querySelector(".scene-container"));
+ReactDOM.render(<VRScene/>, document.querySelector("#scene-container"));
