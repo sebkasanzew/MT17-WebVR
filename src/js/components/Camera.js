@@ -4,6 +4,10 @@ import React from "react";
 
 export default (props) => (
     <Entity>
-      <Entity camera="userHeight: 1.7" look-controls="" wasd-controls="" {...props}/>
+      <Entity camera="userHeight: 1.7"
+              look-controls=""
+              wasd-controls=""
+              rotation="0 180 0"
+              {...props}/>
     </Entity>
 );
