@@ -19,8 +19,6 @@ if (IS_PRODUCTION) {
           NODE_ENV: JSON.stringify("production")
         }
       }),
-      // new webpack.optimize.CommonsChunkPlugin("common.js"),
-      new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
         mangle: {
           except: ["$super", "$", "exports", "require"]
@@ -44,6 +42,10 @@ if (IS_PRODUCTION) {
         dry: false,
       })
   );
+} else {
+  PLUGINS.push(
+      new webpack.EvalSourceMapDevToolPlugin()
+  );
 }
 
 module.exports = {
@@ -55,13 +57,12 @@ module.exports = {
     path: BUILD_DIR,
     publicPath: "/",
   },
-  devtool: "cheap-module-source-map",
   module: {
     noParse: [
-      __dirname + "./node_modules/aframe/dist/aframe.js/", // for aframe from NPM
-      __dirname + "./node_modules/cannon/build/cannon.js/", // for aframe-extras from NPM
+      /aframe.js/, // for aframe from NPM
+      /cannon.js/, // for aframe-extras from NPM
     ],
-    loaders: [
+    rules: [
       {
         // JS.
         exclude: /(node_modules|bower_components)/,
@@ -96,16 +97,16 @@ module.exports = {
   },
   plugins: PLUGINS,
   resolve: {
-    extensions: ["", ".js", ".jsx", ".json"],
-    fallback: path.join(__dirname, "node_modules"),
-    modulesDirectories: [
+    extensions: [".js", ".jsx", ".json"],
+    // fallback: path.join(__dirname, "node_modules"),
+    modules: [
       "src/js",
       "node_modules",
     ]
   },
   resolveLoader: {
-    root: path.join(__dirname, "node_modules"),
-    fallback: [path.join(__dirname, "node_modules")]
+    mainFiles: [path.join(__dirname, "node_modules")],
+    // fallback: [path.join(__dirname, "node_modules")]
   },
   devServer: {
     stats: {

@@ -1,6 +1,6 @@
 {
   "name": "test-tool-web",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A virtual reality experience with tools",
   "scripts": {
     "build:p": "set NODE_ENV=production&&webpack --progress -p",
@@ -80,7 +80,7 @@
     "react-test-renderer": "^15.4.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.2.1"
   }
 }

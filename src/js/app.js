@@ -4,7 +4,7 @@ import { Entity, Scene } from "aframe-react";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "file?name=[name].[ext]!../index.html";
+import "file-loader?name=[name].[ext]!../index.html";
 
 // import "./aframe-components/cuttable";
 // import "./aframe-components/cutter";
