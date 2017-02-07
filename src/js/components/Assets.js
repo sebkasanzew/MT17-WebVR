@@ -67,8 +67,8 @@ export default class Assets extends Component {
 
           {/* Objects */}
           <a-mixin id="cube"
-                   dynamic-body="shape: box; mass: 1; angularDamping: 0; linearDamping: 0"
-                   geometry="primitive: box; height: 0.35; width: 0.2; depth: 0.05"
+                   dynamic-body="shape: box; mass: 500;"
+                   geometry="primitive: box; height: 0.3; width: 0.2; depth: 0.07"
                    material="color: #AAA;"/>
           <a-mixin id="shelf-collider-horizontal"
                    geometry="primitive: box;"
@@ -77,7 +77,7 @@ export default class Assets extends Component {
                    material="visible: false"/>
           <a-mixin id="shelf-collider-vertical"
                    geometry="primitive: box;"
-                   scale="0.03 0.5 1.8"
+                   scale="0.5 1.8 0.03"
                    static-body="shape: box"
                    material="visible: false"/>
           {/*<a-mixin id="cube-hovered"

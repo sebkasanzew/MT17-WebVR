@@ -52,15 +52,6 @@ class VRScene extends React.Component {
   }
 
   render() {
-    const dominoStack = [];
-
-    for (let i = 0; i < 20; i++) {
-      const position = `0 1.6 ${-.8 + (i / 10)}`;
-
-      dominoStack.push(<Entity mixin="cube"
-                               position={position}/>);
-    }
-
     return (
         <Scene
             // debug
@@ -69,7 +60,7 @@ class VRScene extends React.Component {
             // keyboard-shortcuts="enterVR: true; resetSensor: true"
             physics="gravity: -9.8;
                       debug: false;
-                      friction: .1;
+                      friction: .6;
                       restitution: .3;
                       maxInterval: 0.0667;
                       contactEquationStiffness: 1e8;
@@ -144,9 +135,9 @@ class VRScene extends React.Component {
             <Entity mixin="shelf-collider-horizontal"
                     position="0 1.38 0"/>
             <Entity mixin="shelf-collider-vertical"
-                    position="0 0.7 0.92"/>
+                    position="0 0.5 0.92"/>
             <Entity mixin="shelf-collider-vertical"
-                    position="0 0.7 -0.87"/>{/**/}
+                    position="0 0.5 -0.87"/>{/**/}
 
             <Domino/>
           </Entity>
