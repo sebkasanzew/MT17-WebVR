@@ -21,11 +21,8 @@ import Lights from "./components/Lights";
 import Domino from "./components/Domino";
 // import Saw from "./components/Saw";
 
-import "aframe-gltf/dist/aframe-gltf";
 // import "aframe-animation-component";
 // import "aframe-text-component";
-// import "aframe-teleport-controls";
-// import "super-hands";
 
 class VRScene extends React.Component {
   constructor(props) {

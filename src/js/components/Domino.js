@@ -1,5 +1,6 @@
 import { Entity } from "aframe-react";
 import React, { Component } from "react";
+import _ from "lodash";
 
 export default class Domino extends Component {
   constructor(probs) {
@@ -32,12 +33,12 @@ export default class Domino extends Component {
   }
 
   render() {
-    const dominoStack = [];
-
-    dominoStack.push(this.createDominos(1, 9, 1.6, -.8, .2));
-    dominoStack.push(this.createDominos(2, 9, 1.3, -.8, .2));
-    dominoStack.push(this.createDominos(3, 9, 0.75, -.8, .2));
-    dominoStack.push(this.createDominos(4, 9, 0.5, -.8, .2));
+    const dominoStack = _.concat(
+        this.createDominos(1, 9, 1.6, -.8, .2),
+        this.createDominos(2, 9, 1.2, -.8, .2),
+        this.createDominos(3, 9, 0.7, -.8, .2),
+        this.createDominos(4, 9, 0.35, -.8, .2)
+    );
 
     return (
         <Entity>

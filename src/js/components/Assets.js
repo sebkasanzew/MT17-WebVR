@@ -67,7 +67,7 @@ export default class Assets extends Component {
 
           {/* Objects */}
           <a-mixin id="cube"
-                   dynamic-body="shape: box; mass: 500;"
+                   dynamic-body="shape: box; mass: 2;"
                    geometry="primitive: box; height: 0.3; width: 0.2; depth: 0.07"
                    material="color: #AAA;"/>
           <a-mixin id="shelf-collider-horizontal"
