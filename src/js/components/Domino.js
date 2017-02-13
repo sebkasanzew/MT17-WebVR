@@ -5,6 +5,9 @@ import _ from "lodash";
 export default class Domino extends Component {
   constructor(probs) {
     super(probs);
+
+    this.numberInRow = 5;
+    this.distance = .3;
   }
 
   componentDidMount() {
@@ -24,7 +27,7 @@ export default class Domino extends Component {
       const id = `domino${reactId}-${i}`;
       dominoStack.push(<Entity key={id}
                                mixin="cube"
-                               className="cube"
+                               className="cube grabbable"
                                shadow="cast: true;"
                                position={position}/>);
     }
@@ -34,10 +37,10 @@ export default class Domino extends Component {
 
   render() {
     const dominoStack = _.concat(
-        this.createDominos(1, 9, 1.6, -.8, .2),
-        this.createDominos(2, 9, 1.2, -.8, .2),
-        this.createDominos(3, 9, 0.7, -.8, .2),
-        this.createDominos(4, 9, 0.35, -.8, .2)
+        this.createDominos(1, this.numberInRow, 1.6, -.8, this.distance),
+        this.createDominos(2, this.numberInRow, 1.2, -.8, this.distance),
+        this.createDominos(3, this.numberInRow, 0.7, -.8, this.distance),
+        this.createDominos(4, this.numberInRow, 0.35, -.8, this.distance)
     );
 
     return (

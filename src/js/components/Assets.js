@@ -28,6 +28,7 @@ export default class Assets extends Component {
     // const sceneGLTF = require("../../assets/3d/scene/Scene.gltf");
     const groundObj = require("../../assets/3d/scene/Ground.obj");
     const groundMtl = require("../../assets/3d/scene/Ground.mtl");
+    const bucketObj = require("../../assets/3d/bucket/bucket.obj");
 
     // Images
     const woodToon = require("../../assets/img/tex/wood_texture_by_dellot.jpg");
@@ -54,6 +55,7 @@ export default class Assets extends Component {
           {/*<a-asset-item id="scene-gltf" src={sceneGLTF}/>*/}
           <a-asset-item id="ground-obj" src={groundObj}/>
           <a-asset-item id="ground-mtl" src={groundMtl}/>
+          <a-asset-item id="bucket-obj" src={bucketObj}/>
 
           {/* Images */}
           {/*<img id="wood-planks" src="assets/img/tex/re_planks.png"/>*/}
@@ -64,6 +66,7 @@ export default class Assets extends Component {
           {/* Materials */}
           <a-mixin id="tool-color-prime" material="color: green"/>
           <a-mixin id="tool-color-second" material="color: dark-grey"/>
+          <a-mixin id="bucket-mat" material="color: #1376FD"/>
 
           {/* Objects */}
           <a-mixin id="cube"

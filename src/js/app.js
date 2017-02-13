@@ -19,6 +19,7 @@ import Camera from "./components/Camera";
 import Controls from "./components/Controls";
 import Lights from "./components/Lights";
 import Domino from "./components/Domino";
+import Balls from "./components/Balls";
 // import Saw from "./components/Saw";
 
 // import "aframe-animation-component";
@@ -56,7 +57,7 @@ class VRScene extends React.Component {
             // stats
             // keyboard-shortcuts="enterVR: true; resetSensor: true"
             physics="gravity: -9.8;
-                      debug: false;
+                      debug: true;
                       friction: .6;
                       restitution: .3;
                       maxInterval: 0.0667;
@@ -73,7 +74,7 @@ class VRScene extends React.Component {
 
           <Controls
               static-body="shape: sphere; sphereRadius: 0.02;"
-              sphere-collider="objects: .cube;"
+              sphere-collider="objects: .grabbable;"
               grab=""
           />
 
@@ -134,7 +135,7 @@ class VRScene extends React.Component {
             <Entity mixin="shelf-collider-vertical"
                     position="0 0.5 0.92"/>
             <Entity mixin="shelf-collider-vertical"
-                    position="0 0.5 -0.87"/>{/**/}
+                    position="0 0.5 -0.87"/>
 
             <Domino/>
           </Entity>
@@ -147,7 +148,26 @@ class VRScene extends React.Component {
                   shadow="receive: true;"/>
 
           {/*<Entity id="sceneObject"
-           gltf-model="asset: #scene-gltf;"/>*/}
+           gltf-model="url(../../assets/3d/scene/Scene.gltf)"/>*/}
+
+
+
+          <Entity position="-.6 4.6 -1">
+            <Entity id="bucket"
+                    obj-model="obj: #bucket-obj;"
+                    mixin="bucket-mat"
+                    static-body="shape: auto;"
+                    position="0 -4 0">
+            </Entity>
+            <Balls/>
+          </Entity>
+
+          <Entity id="empty-bucket"
+                  obj-model="obj: #bucket-obj;"
+                  mixin="bucket-mat"
+                  static-body="shape: auto;"
+                  position="-1 0 -.2">
+          </Entity>
 
           <a-sky src="#stars"/>
 
