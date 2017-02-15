@@ -38,7 +38,7 @@ export default class Assets extends Component {
     require("../../assets/3d/table/COM_Deco_OutdecoB_WoodTable01_D01.tga.png");
 
     return (
-        <a-assets timeout="10000">
+        <a-assets timeout="5000">
           {/* Audio */} {/*src="assets/sound/saw_running.ogg"*/}
           <audio id="saw-running" src={sawRunning}/>
           <audio id="saw-begin" src={sawBegin}/>
