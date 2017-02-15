@@ -1,9 +1,13 @@
 import { Entity } from "aframe-react";
 import React, { Component } from "react";
+import _ from "lodash";
 
 export default class Domino extends Component {
   constructor(probs) {
     super(probs);
+
+    this.numberInRow = 5;
+    this.distance = .3;
   }
 
   componentDidMount() {
@@ -15,48 +19,29 @@ export default class Domino extends Component {
     }, 4000);
   }
 
-  render() {
+  createDominos(reactId, number, startHeight, startZ, distance) {
     const dominoStack = [];
 
-    for (let i = 0; i < 10; i++) {
-      const position = `0 1.6 ${-.8 + (i / 5)}`;
-      const id = `domino1-${i}`;
+    for (let i = 0; i < number; i++) {
+      const position = `0 ${startHeight} ${startZ + (i * distance)}`;
+      const id = `domino${reactId}-${i}`;
       dominoStack.push(<Entity key={id}
                                mixin="cube"
-                               className="cube"
+                               className="cube grabbable"
                                shadow="cast: true;"
                                position={position}/>);
     }
 
-    for (let i = 0; i < 10; i++) {
-      const position = `0 1.3 ${-.8 + (i / 5)}`;
-      const id = `domino2-${i}`;
-      dominoStack.push(<Entity key={id}
-                               mixin="cube"
-                               className="cube"
-                               shadow="cast: true;"
-                               position={position}/>);
-    }
+    return dominoStack;
+  }
 
-    for (let i = 0; i < 10; i++) {
-      const position = `0 0.75 ${-.8 + (i / 5)}`;
-      const id = `domino3-${i}`;
-      dominoStack.push(<Entity key={id}
-                               mixin="cube"
-                               className="cube"
-                               shadow="cast: true;"
-                               position={position}/>);
-    }
-
-    for (let i = 0; i < 10; i++) {
-      const position = `0 0.5 ${-.8 + (i / 5)}`;
-      const id = `domino4-${i}`;
-      dominoStack.push(<Entity key={id}
-                               mixin="cube"
-                               className="cube"
-                               shadow="cast: true;"
-                               position={position}/>);
-    }
+  render() {
+    const dominoStack = _.concat(
+        this.createDominos(1, this.numberInRow, 1.6, -.8, this.distance),
+        this.createDominos(2, this.numberInRow, 1.2, -.8, this.distance),
+        this.createDominos(3, this.numberInRow, 0.7, -.8, this.distance),
+        this.createDominos(4, this.numberInRow, 0.35, -.8, this.distance)
+    );
 
     return (
         <Entity>

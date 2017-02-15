@@ -1,6 +1,6 @@
 {
   "name": "test-tool-web",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "A virtual reality experience with tools",
   "scripts": {
     "build:p": "set NODE_ENV=production&&webpack --progress -p",
@@ -38,17 +38,14 @@
     "aframe": "^0.4.1",
     "aframe-animation-component": "^3.2.0",
     "aframe-auto-detect-controllers-component": "^0.1.4",
-    "aframe-extras": "^3.2.4",
-    "aframe-gltf": "^1.1.0",
+    "aframe-extras": "^3.2.6",
     "aframe-physics-system": "^1.2.0",
     "aframe-react": "^3.4.1",
-    "aframe-teleport-controls": "^0.1.0",
     "aframe-text-component": "^0.4.0",
     "babel-polyfill": "^6.20.0",
     "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "super-hands": "^0.2.1",
     "three-js-csg": "^72.0.0"
   },
   "devDependencies": {
@@ -80,7 +77,7 @@
     "react-test-renderer": "^15.4.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.2.1"
   }
 }

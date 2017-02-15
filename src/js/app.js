@@ -4,7 +4,7 @@ import { Entity, Scene } from "aframe-react";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "file?name=[name].[ext]!../index.html";
+import "file-loader?name=[name].[ext]!../index.html";
 
 // import "./aframe-components/cuttable";
 // import "./aframe-components/cutter";
@@ -19,13 +19,11 @@ import Camera from "./components/Camera";
 import Controls from "./components/Controls";
 import Lights from "./components/Lights";
 import Domino from "./components/Domino";
+import Balls from "./components/Balls";
 // import Saw from "./components/Saw";
 
-import "aframe-gltf/dist/aframe-gltf";
 // import "aframe-animation-component";
 // import "aframe-text-component";
-// import "aframe-teleport-controls";
-// import "super-hands";
 
 class VRScene extends React.Component {
   constructor(props) {
@@ -52,15 +50,6 @@ class VRScene extends React.Component {
   }
 
   render() {
-    const dominoStack = [];
-
-    for (let i = 0; i < 20; i++) {
-      const position = `0 1.6 ${-.8 + (i / 10)}`;
-
-      dominoStack.push(<Entity mixin="cube"
-                               position={position}/>);
-    }
-
     return (
         <Scene
             // debug
@@ -68,8 +57,8 @@ class VRScene extends React.Component {
             // stats
             // keyboard-shortcuts="enterVR: true; resetSensor: true"
             physics="gravity: -9.8;
-                      debug: false;
-                      friction: .1;
+                      debug: true;
+                      friction: .6;
                       restitution: .3;
                       maxInterval: 0.0667;
                       contactEquationStiffness: 1e8;
@@ -85,7 +74,7 @@ class VRScene extends React.Component {
 
           <Controls
               static-body="shape: sphere; sphereRadius: 0.02;"
-              sphere-collider="objects: .cube;"
+              sphere-collider="objects: .grabbable;"
               grab=""
           />
 
@@ -144,9 +133,9 @@ class VRScene extends React.Component {
             <Entity mixin="shelf-collider-horizontal"
                     position="0 1.38 0"/>
             <Entity mixin="shelf-collider-vertical"
-                    position="0 0.7 0.92"/>
+                    position="0 0.5 0.92"/>
             <Entity mixin="shelf-collider-vertical"
-                    position="0 0.7 -0.87"/>{/**/}
+                    position="0 0.5 -0.87"/>
 
             <Domino/>
           </Entity>
@@ -159,7 +148,26 @@ class VRScene extends React.Component {
                   shadow="receive: true;"/>
 
           {/*<Entity id="sceneObject"
-           gltf-model="asset: #scene-gltf;"/>*/}
+           gltf-model="url(../../assets/3d/scene/Scene.gltf)"/>*/}
+
+
+
+          <Entity position="-.6 4.6 -1">
+            <Entity id="bucket"
+                    obj-model="obj: #bucket-obj;"
+                    mixin="bucket-mat"
+                    static-body="shape: auto;"
+                    position="0 -4 0">
+            </Entity>
+            <Balls/>
+          </Entity>
+
+          <Entity id="empty-bucket"
+                  obj-model="obj: #bucket-obj;"
+                  mixin="bucket-mat"
+                  static-body="shape: auto;"
+                  position="-1 0 -.2">
+          </Entity>
 
           <a-sky src="#stars"/>
 

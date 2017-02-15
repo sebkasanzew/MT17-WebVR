@@ -28,6 +28,7 @@ export default class Assets extends Component {
     // const sceneGLTF = require("../../assets/3d/scene/Scene.gltf");
     const groundObj = require("../../assets/3d/scene/Ground.obj");
     const groundMtl = require("../../assets/3d/scene/Ground.mtl");
+    const bucketObj = require("../../assets/3d/bucket/bucket.obj");
 
     // Images
     const woodToon = require("../../assets/img/tex/wood_texture_by_dellot.jpg");
@@ -37,7 +38,7 @@ export default class Assets extends Component {
     require("../../assets/3d/table/COM_Deco_OutdecoB_WoodTable01_D01.tga.png");
 
     return (
-        <a-assets timeout="10000">
+        <a-assets timeout="5000">
           {/* Audio */} {/*src="assets/sound/saw_running.ogg"*/}
           <audio id="saw-running" src={sawRunning}/>
           <audio id="saw-begin" src={sawBegin}/>
@@ -54,6 +55,7 @@ export default class Assets extends Component {
           {/*<a-asset-item id="scene-gltf" src={sceneGLTF}/>*/}
           <a-asset-item id="ground-obj" src={groundObj}/>
           <a-asset-item id="ground-mtl" src={groundMtl}/>
+          <a-asset-item id="bucket-obj" src={bucketObj}/>
 
           {/* Images */}
           {/*<img id="wood-planks" src="assets/img/tex/re_planks.png"/>*/}
@@ -64,11 +66,12 @@ export default class Assets extends Component {
           {/* Materials */}
           <a-mixin id="tool-color-prime" material="color: green"/>
           <a-mixin id="tool-color-second" material="color: dark-grey"/>
+          <a-mixin id="bucket-mat" material="color: #1376FD"/>
 
           {/* Objects */}
           <a-mixin id="cube"
-                   dynamic-body="shape: box; mass: 1; angularDamping: 0; linearDamping: 0"
-                   geometry="primitive: box; height: 0.35; width: 0.2; depth: 0.05"
+                   dynamic-body="shape: box; mass: 2;"
+                   geometry="primitive: box; height: 0.3; width: 0.2; depth: 0.07"
                    material="color: #AAA;"/>
           <a-mixin id="shelf-collider-horizontal"
                    geometry="primitive: box;"
@@ -77,7 +80,7 @@ export default class Assets extends Component {
                    material="visible: false"/>
           <a-mixin id="shelf-collider-vertical"
                    geometry="primitive: box;"
-                   scale="0.03 0.5 1.8"
+                   scale="0.5 1.8 0.03"
                    static-body="shape: box"
                    material="visible: false"/>
           {/*<a-mixin id="cube-hovered"
