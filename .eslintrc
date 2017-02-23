@@ -15,19 +15,22 @@
   "env": {
     "browser": true,
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "jest/globals": true
   },
   "extends": [
     "eslint:recommended",
-    "babel"
+    "babel",
+    "plugin:jest/recommended"
   ],
   "rules": {
     // Additional, per-project rules...
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "mocha/no-exclusive-tests": "error",
-    "jest/no-exclusive-tests": 2,
-    "jest/no-identical-title": 2,
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
     "linebreak-style": "off"
   }
 }

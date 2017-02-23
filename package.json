@@ -17,7 +17,7 @@
     "moduleDirectories": [
       "node_modules"
     ],
-    "testPathDirs": [
+    "roots": [
       "tests/react"
     ]
   },
@@ -66,11 +66,11 @@
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-chai-expect": "^1.1.1",
     "eslint-plugin-flowtype": "^2.29.1",
-    "eslint-plugin-jest": "^1.0.2",
+    "eslint-plugin-jest": "^19.0.1",
     "eslint-plugin-mocha": "^4.7.0",
     "eslint-plugin-react": "^6.8.0",
     "file-loader": "^0.10.0",
-    "jest": "^18.0.0",
+    "jest": "^19.0.2",
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
     "obj2gltf": "^0.1.7",

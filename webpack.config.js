@@ -75,10 +75,6 @@ module.exports = {
         loader: "style-loader!css-loader",
       },
       {
-        test: /\.json$/,
-        loader: "json-loader",
-      },
-      {
         // Images
         test: /\.(png|jpg)$/,
         loader: "file-loader?name=assets/img/[name].[ext]",
