@@ -10,7 +10,18 @@ const PROJECT_DIR = path.resolve(__dirname);
 const BUILD_DIR = path.resolve(__dirname, "build");
 const APP_DIR = path.resolve(__dirname, "src/js");
 
-const PLUGINS = [];
+const PLUGINS = [
+  new webpack.LoaderOptionsPlugin({
+    options: {
+      worker: {
+        output: {
+          filename: "worker/subtractWorker.js",
+          chunkFilename: "[id].hash.worker.js"
+        }
+      }
+    }
+  })
+];
 
 if (IS_PRODUCTION) {
   PLUGINS.push(
@@ -65,10 +76,19 @@ module.exports = {
     rules: [
       {
         // JS.
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules|bower_components|worker)/,
         include: APP_DIR,
         loader: "babel-loader",
         test: /\.js$/,
+      },
+      {
+        exclude: /(node_modules|bower_components|js)/,
+        include: APP_DIR,
+        loader: "babel!worker",
+        query: {
+          presets: ["es2015"],
+        },
+        test: /\.worker\.js$/,
       },
       {
         test: /\.css$/,

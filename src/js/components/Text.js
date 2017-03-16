@@ -1,6 +1,7 @@
 import { Entity } from "aframe-react";
 import React from "react";
-import AFRAME from "aframe";
+
+/* global AFRAME: true */
 
 export default (props) => {
   const extraProps = AFRAME.utils.extend({}, props);

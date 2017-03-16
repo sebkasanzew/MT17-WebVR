@@ -6,8 +6,8 @@ import ReactDOM from "react-dom";
 
 import "file-loader?name=[name].[ext]!../index.html";
 
-// import "./aframe-components/cuttable";
-// import "./aframe-components/cutter";
+import "./aframe-components/cuttable";
+import "./aframe-components/cutter";
 import "./aframe-components/physics";
 import "./aframe-components/extras";
 // import "./aframe-components/follow";
@@ -26,28 +26,43 @@ import Balls from "./components/Balls";
 // import "aframe-text-component";
 
 class VRScene extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  /*
+   constructor(props) {
+   super(props);
+   this.state = {};
+   }
+   */
+
 
   componentDidMount() {
-    console.log("Did mount");
 
-    const scene = document.querySelector("a-scene");
-    if (scene.hasLoaded) {
-      run();
-    } else {
-      scene.addEventListener("loaded", run);
+    console.time("Scene");
+
+    const scene = document.getElementById("sceneObject");
+    if (scene) {
+      scene.addEventListener("model-loaded", () => {
+        console.timeEnd("Scene");
+      });
     }
-    function run() {
-      console.log("HAS LOADED");
 
-      setTimeout(function() {
+    /*
+     console.log("Did mount");
 
-      }, 3000);
-    }
+     const scene = document.querySelector("a-scene");
+     if (scene.hasLoaded) {
+     run();
+     } else {
+     scene.addEventListener("loaded", run);
+     }
+     function run() {
+     console.log("HAS LOADED");
+
+     setTimeout(function() {
+
+     }, 3000);
+     }*/
   }
+
 
   render() {
     return (
@@ -117,8 +132,9 @@ class VRScene extends React.Component {
                     position="0 0.27 0"
                     geometry="primitive: box;"
                     scale="1.38 0.61 0.57"
-                    static-body="shape: box"
-                    material="visible: false"/>
+                    static-body="shape: auto"
+                    material="visible: false"
+            />
           </Entity>
 
           <Entity id="shelf"
@@ -150,6 +166,8 @@ class VRScene extends React.Component {
           {/*<Entity id="sceneObject"
            gltf-model="url(../../assets/3d/scene/Scene.gltf)"/>*/}
 
+          {/*<Entity id="sceneObject"
+           collada-model="url(../../assets/3d/scene/Scene.dae)"/>*/}
 
 
           <Entity position="-.6 4.6 -1">
@@ -157,6 +175,7 @@ class VRScene extends React.Component {
                     obj-model="obj: #bucket-obj;"
                     mixin="bucket-mat"
                     static-body="shape: auto;"
+                    cuttable
                     position="0 -4 0">
             </Entity>
             <Balls/>

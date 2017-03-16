@@ -9,7 +9,7 @@ export default class Domino extends Component {
     this.numberInRow = 5;
     this.distance = .3;
   }
-
+/*
   componentDidMount() {
     const _this = this;
 
@@ -18,6 +18,7 @@ export default class Domino extends Component {
       _this.forceUpdate();
     }, 4000);
   }
+  */
 
   createDominos(reactId, number, startHeight, startZ, distance) {
     const dominoStack = [];

@@ -23,6 +23,7 @@ export default class Assets extends Component {
     const tableObj = require("../../assets/3d/table/Table.obj");
     const tableMtl = require("../../assets/3d/table/Table.mtl");
     // const mainTable = require("../../assets/3d/mainTable/IKEA Tisch.dae");
+    // const sceneDae = require("../../assets/3d/scene/Scene.dae");
     const sceneObj = require("../../assets/3d/scene/Scene.obj");
     const sceneMtl = require("../../assets/3d/scene/Scene.mtl");
     // const sceneGLTF = require("../../assets/3d/scene/Scene.gltf");
@@ -50,6 +51,7 @@ export default class Assets extends Component {
           <a-asset-item id="table-obj" src={tableObj}/>
           <a-asset-item id="table-mtl" src={tableMtl}/>
           {/*<a-asset-item id="mainTable" src={mainTable}/>*/}
+          {/*<a-asset-item id="scene-dae" src={sceneDae}/>*/}
           <a-asset-item id="scene-obj" src={sceneObj}/>
           <a-asset-item id="scene-mtl" src={sceneMtl}/>
           {/*<a-asset-item id="scene-gltf" src={sceneGLTF}/>*/}
@@ -76,12 +78,12 @@ export default class Assets extends Component {
           <a-mixin id="shelf-collider-horizontal"
                    geometry="primitive: box;"
                    scale="0.5 0.03 1.8"
-                   static-body="shape: box"
+                   static-body="shape: auto"
                    material="visible: false"/>
           <a-mixin id="shelf-collider-vertical"
                    geometry="primitive: box;"
                    scale="0.5 1.8 0.03"
-                   static-body="shape: box"
+                   static-body="shape: auto"
                    material="visible: false"/>
           {/*<a-mixin id="cube-hovered"
            material="color: #FFFFFF;"/>*/}

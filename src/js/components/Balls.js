@@ -31,8 +31,6 @@ export default class Balls extends Component {
       balls.push(this.createBall(randomColor, i));
     }
 
-    console.log(balls);
-
     return (
         <Entity>
           {balls}
